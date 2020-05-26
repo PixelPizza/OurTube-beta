@@ -18,8 +18,8 @@ client.on('ready', () => {
 client.on('message', message => {
     if (!message.content.startsWith(prefix) || message.author.bot || message.webhookID) return;
 
-    const args = message.content.slice(prefix.length);
-    const commandName = args.shift();
+    const args = message.content.slice(prefix.length).split(/ +/);
+    const commandName = args.shift().toLowerCase();
 
     console.log(commandName);
 
