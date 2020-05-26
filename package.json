@@ -1,0 +1,28 @@
+{
+  "name": "ourtube",
+  "version": "1.0.0",
+  "description": "music bot for Pixel Pizza",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaronetje/OurTube.git"
+  },
+  "keywords": [],
+  "author": "Jaron Zijlstra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaronetje/OurTube/issues"
+  },
+  "homepage": "https://github.com/jaronetje/OurTube#readme",
+  "dependencies": {
+    "@discordjs/opus": "^0.3.2",
+    "discord.js": "^12.2.0",
+    "ffmpeg-static": "^4.2.2",
+    "node-opus": "^0.3.3",
+    "opusscript": "0.0.7",
+    "sodium": "^3.0.2"
+  }
+}
