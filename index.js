@@ -1,4 +1,5 @@
 const fs = require('fs');
+const ytdl = require('ytdl-core-discord');
 const {token, prefix, channels, voiceChannels} = require('./config.json');
 const {blue, red} = require('./colors.json');
 const {Client, Collection, MessageEmbed} = require('discord.js');
@@ -74,7 +75,7 @@ client.on('message', async message => {
                 }, 1000);
                 return;
             }
-            client.dispatcher = client.connection.play(client.queue[0]);
+            client.dispatcher = client.connection.play(ytdl(client.queue[0]));
             client.dispatcher.on('finish', () => {
                 if (!client.loop){
                     client.queue.shift();
