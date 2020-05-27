@@ -1,5 +1,4 @@
 const {} = require('discord.js');
-const ytdl = require('ytdl-core-discord');
 const {getInfo} = require('ytdl-getinfo');
 
 module.exports = {
@@ -9,10 +8,11 @@ module.exports = {
     agrs: true,
     usage: "<search query>",
     guildOnly: true,
-    async execute(message, args, client, queue){
+    async execute(message, args, client){
         let query = args.join(" ");
         getInfo(query).then(async info => {
-            return info.items[0].id;
+            const videoId = info.items[0].id;
+            client.queue.push(videoId);
         });
     }
 }
