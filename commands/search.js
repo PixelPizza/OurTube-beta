@@ -47,12 +47,12 @@ module.exports = {
             atResult++;
         });
 
-        function collectPlay(){
+        function collectPlay(mess){
             const filter = m => m.author === message.author;
             const collector = message.channel.createMessageCollector(filter, {max: 1});
             collector.on('collect', msg => {
                 if (msg.content.toLowerCase() === "cancel"){
-                    return message.channel.send(cancelEmbed);
+                    return mess.edit(cancelEmbed);
                 }
                 if (isNaN(msg.content) || parseInt(msg.content) > results.length || parseInt(msg.content) < 1){
                     return collectPlay();
@@ -62,8 +62,8 @@ module.exports = {
             });
         }
 
-        message.channel.send(embedMsg).then(() => {
-            collectPlay();
+        message.channel.send(embedMsg).then(msg => {
+            collectPlay(msg);
         });
     }
 }
