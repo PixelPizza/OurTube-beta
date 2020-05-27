@@ -68,6 +68,7 @@ module.exports = {
                     return collectPlay(mess);
                 }
                 const url = results[parseInt(msg.content) - 1].link;
+                console.log(results);
                 if (!client.connection){
                     client.connection = await message.member.voice.channel.join();
                 }
