@@ -10,8 +10,17 @@ module.exports = {
         const embedMsg = new MessageEmbed()
             .setColor(blue)
             .setTitle(":repeat_one: Loop");
+        
+        if (!client.connection){
+            embedMsg
+                .setColor(red)
+                .setTitle("Not connected")
+                .setDescription("I'm not connected to a voice channel!");
 
-        if (client.loop == false){
+            return message.channel.send(embedMsg);
+        }
+
+        if (!client.loop){
             client.loop = true;
             embedMsg.setDescription(`Now looping current song`);
         } else {
