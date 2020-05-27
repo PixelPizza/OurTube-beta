@@ -57,6 +57,28 @@ module.exports = {
             atResult++;
         });
 
+        async function playSong(){
+            if (client.connection){
+                if (!client.queue.length){
+                    setTimeout(function() {
+                        playSong();
+                    }, 1000);
+                    return;
+                }
+                client.dispatcher = client.connection.play(await ytdl(client.queue[0]), {type: "opus"});
+                client.dispatcher.on('finish', () => {
+                    if (!client.loop){
+                        client.queue.shift();
+                    }
+                    setTimeout(function() {
+                        playSong();
+                    }, 1000);
+                });
+            } else {
+                client.dispatcher = null;
+            }
+        }
+
         async function collectPlay(mess){
             const filter = m => m.author === message.author;
             const collector = message.channel.createMessageCollector(filter, {max: 1});
@@ -72,6 +94,7 @@ module.exports = {
                 }
                 const videoId = results[parseInt(msg.content) - 1].id;
                 client.queue.push(videoId);
+                playSong();
             });
         }
 

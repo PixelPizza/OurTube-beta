@@ -94,7 +94,7 @@ client.on('message', async message => {
         await command.execute(message, args, client);
         const clientMember = message.guild.members.cache.get(client.user.id);
         console.log(client.dispatcher);
-        if (!client.dispatcher && clientMember.voice.channel || commandName === "search"){
+        if (!client.dispatcher && clientMember.voice.channel){
             playSong();
         }
     } catch (error) {
