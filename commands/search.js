@@ -1,4 +1,5 @@
 const {MessageEmbed} = require('discord.js');
+const ytdl = require('ytdl-core-discord');
 const {blue, red} = require('../colors.json');
 const {youtube_api_key} = require('../config.json');
 const search = require('youtube-search');
