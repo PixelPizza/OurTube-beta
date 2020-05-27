@@ -11,14 +11,14 @@ module.exports = {
             .setColor(blue)
             .setTitle(":repeat_one: Loop");
 
-        if (!client.loop){
+        if (client.loop == false){
             client.loop = true;
             embedMsg.setDescription(`Now looping current song`);
         } else {
             client.loop = false;
             embedMsg.setDescription(`Stopped looping current song`);
         }
-        
+
         message.channel.send(embedMsg);
     }
 }
