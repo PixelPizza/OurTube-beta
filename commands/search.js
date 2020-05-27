@@ -52,7 +52,8 @@ module.exports = {
         var atResult = 1;
         results.forEach(result => {
             let title = result.channelTitle.replace("&quot;", '"').replace("&#39;", "'");
-            embedMsg.addField(`${atResult}. ${title}`, `[${result.title}](${result.link})`);
+            let resultTitle = result.title.replace("&quot;", '"').replace("&#39;", "'");
+            embedMsg.addField(`${atResult}. ${title}`, `[${resultTitle}](${result.link})`);
             atResult++;
         });
 
