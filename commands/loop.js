@@ -7,19 +7,18 @@ module.exports = {
     args: false,
     guildOnly: true,
     execute(message, args, client){
-        client.loop = !client.loop;
         const embedMsg = new MessageEmbed()
             .setColor(blue)
-            .setTitle(":repeat_one: Loop")
-        
-        switch(client.loop){
-            case true:
-                embedMsg.setDescription(`Now looping current song`);
-                break;
-            case false:
-                embedMsg.setDescription(`Stopped looping current song`);
-                break;
+            .setTitle(":repeat_one: Loop");
+
+        if (!client.loop){
+            client.loop = true;
+            embedMsg.setDescription(`Now looping current song`);
+        } else {
+            client.loop = false;
+            embedMsg.setDescription(`Stopped looping current song`);
         }
+        
         message.channel.send(embedMsg);
     }
 }
