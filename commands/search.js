@@ -51,7 +51,8 @@ module.exports = {
 
         var atResult = 1;
         results.forEach(result => {
-            embedMsg.addField(`${atResult}. ${result.channelTitle}`, `[${result.title}](${result.link})`);
+            let title = result.channelTitle.replace("&quot;", '"').replace("&#39;", "'");
+            embedMsg.addField(`${atResult}. ${title}`, `[${result.title}](${result.link})`);
             atResult++;
         });
 
@@ -65,7 +66,7 @@ module.exports = {
                 if (isNaN(msg.content) || parseInt(msg.content) > results.length || parseInt(msg.content) < 1){
                     return collectPlay(mess);
                 }
-                args = [results[parseInt(msg.content)].link];
+                args = [results[parseInt(msg.content) - 1].link];
                 client.commands.get("play").execute(message, args, client);
             });
         }
