@@ -69,7 +69,9 @@ client.on('message', async message => {
     async function playSong(){
         if (client.connection){
             if (!client.queue.length){
-                playSong();
+                setTimeout(function() {
+                    playSong();
+                }, 1000);
                 return;
             }
             client.dispatcher = client.connection.play(client.queue[0]);
@@ -77,7 +79,9 @@ client.on('message', async message => {
                 if (!client.loop){
                     client.queue.shift();
                 }
-                playSong();
+                setTimeout(function() {
+                    playSong();
+                }, 1000);
             });
         } else {
             client.dispatcher = null;
