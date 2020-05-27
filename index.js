@@ -22,8 +22,6 @@ client.on('ready', () => {
 });
 
 client.on('message', async message => {
-    console.log(client.queue);
-    
     if (!message.content.startsWith(prefix) || message.author.bot || message.webhookID || message.channel.id !== channels.music) return;
 
     const args = message.content.slice(prefix.length).split(/ +/);
@@ -95,6 +93,8 @@ client.on('message', async message => {
     try {
         await command.execute(message, args, client);
         const clientMember = message.guild.members.cache.get(client.user.id);
+        console.log(client.dispatcher);
+        console.log(clientMember.voice.channel);
         if (!client.dispatcher && clientMember.voice.channel){
             playSong();
         }
