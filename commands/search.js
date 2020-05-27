@@ -57,10 +57,10 @@ module.exports = {
             atResult++;
         });
 
-        function collectPlay(mess){
+        async function collectPlay(mess){
             const filter = m => m.author === message.author;
             const collector = message.channel.createMessageCollector(filter, {max: 1});
-            collector.on('collect', msg => {
+            collector.on('collect', async msg => {
                 if (msg.content.toLowerCase() === "cancel"){
                     return mess.edit(cancelEmbed);
                 }
@@ -68,6 +68,9 @@ module.exports = {
                     return collectPlay(mess);
                 }
                 const url = results[parseInt(msg.content) - 1].link;
+                if (!client.connection){
+                    client.connection = await message.member.voice.channel.join();
+                }
                 client.queue.push(url);
             });
         }
