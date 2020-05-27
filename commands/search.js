@@ -63,7 +63,7 @@ module.exports = {
                     return mess.edit(cancelEmbed);
                 }
                 if (isNaN(msg.content) || parseInt(msg.content) > results.length || parseInt(msg.content) < 1){
-                    return collectPlay();
+                    return collectPlay(mess);
                 }
                 args = [results[parseInt(msg.content)].link];
                 client.commands.get("play").execute(message, args, client);
