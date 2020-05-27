@@ -33,6 +33,14 @@ client.on('message', async message => {
 
     if (!command) return;
 
+    const clientMember = message.guild.members.cache.get(client.user.id);
+    if (!clientMember.voice.channel){
+        client.connection = null;
+        client.dispatcher = null;
+        client.queue = [];
+        client.loop = false;
+    }
+
     const embedMsg = new MessageEmbed()
         .setColor(blue)
         .setThumbnail(message.author.displayAvatarURL())
@@ -92,8 +100,6 @@ client.on('message', async message => {
 
     try {
         await command.execute(message, args, client);
-        const clientMember = message.guild.members.cache.get(client.user.id);
-        console.log(client.dispatcher);
         if (!client.dispatcher && clientMember.voice.channel){
             playSong();
         }
