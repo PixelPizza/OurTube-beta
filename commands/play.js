@@ -1,5 +1,6 @@
 const {} = require('discord.js');
 const ytdl = require('ytdl-core-discord');
+const {getInfo} = require('ytdl-getinfo');
 
 module.exports = {
     name: "play",
@@ -10,10 +11,8 @@ module.exports = {
     guildOnly: true,
     async execute(message, args, client, queue){
         let query = args.join(" ");
-        let info = await ytdl.getInfo(query);
-        //query = info.items[0].id;
-        //queue.push(query);
-        console.log(info);
-        return queue;
+        getInfo(query).then(async info => {
+            return info.items[0].id;
+        });
     }
 }
