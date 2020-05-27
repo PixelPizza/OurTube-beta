@@ -67,12 +67,11 @@ module.exports = {
                 if (isNaN(msg.content) || parseInt(msg.content) > results.length || parseInt(msg.content) < 1){
                     return collectPlay(mess);
                 }
-                const url = results[parseInt(msg.content) - 1].link;
-                console.log(results);
                 if (!client.connection){
                     client.connection = await message.member.voice.channel.join();
                 }
-                client.queue.push(url);
+                const videoId = results[parseInt(msg.content) - 1].id;
+                client.queue.push(videoId);
             });
         }
 
