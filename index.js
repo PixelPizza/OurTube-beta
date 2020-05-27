@@ -8,6 +8,7 @@ client.commands = new Collection();
 client.queue = [];
 client.loop = false;
 client.connection = null;
+client.dispatcher = null;
 const cmdFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of cmdFiles) {
