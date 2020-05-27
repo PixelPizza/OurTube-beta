@@ -10,7 +10,7 @@ module.exports = {
     usage: "<search query>",
     guildOnly: true,
     async execute(message, args, client){
-        const connection = message.member.voice.channel.join();
+        const connection = await message.member.voice.channel.join();
         const dispatcher = connection.play(await ytdl(args.join(" ")), {type: "opus"});
         dispatcher.on('finish', () => {
             connection.disconnect();
