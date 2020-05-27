@@ -32,21 +32,21 @@ module.exports = {
         let results = await search(query, opts)
 
         if (!results){
-            embedMsg
+            cancelEmbed
                 .setColor(red)
                 .setDescription(`No videos found`);
 
-            return message.channel.send(embedMsg);
+            return message.channel.send(cancelEmbed);
         }
 
         results = results.results;
 
         if (!results.length){
-            embedMsg
+            cancelEmbed
                 .setColor(red)
                 .setDescription(`No videos found`);
 
-            return message.channel.send(embedMsg);
+            return message.channel.send(cancelEmbed);
         }
 
         var atResult = 1;
