@@ -10,14 +10,14 @@ module.exports = {
     usage: "<search query>",
     guildOnly: true,
     async execute(message, args, client){
-        const query = args.join(" ");
+        let query = args.join(" ");
         getInfo(query).then(info => {
-            console.log(info.items[0]);
-        });
-        const connection = await message.member.voice.channel.join();
-        const dispatcher = connection.play(await ytdl(query), {type: "opus"});
-        dispatcher.on('finish', () => {
-            connection.disconnect();
+            query = info.items[0].id;
+            const connection = await message.member.voice.channel.join();
+            const dispatcher = connection.play(await ytdl(query), {type: "opus"});
+            dispatcher.on('finish', () => {
+                connection.disconnect();
+            });
         });
     }
 }
