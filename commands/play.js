@@ -11,7 +11,7 @@ module.exports = {
     guildOnly: true,
     async execute(message, args, client){
         let query = args.join(" ");
-        getInfo(query).then(info => {
+        getInfo(query).then(async info => {
             query = info.items[0].id;
             const connection = await message.member.voice.channel.join();
             const dispatcher = connection.play(await ytdl(query), {type: "opus"});
