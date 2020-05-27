@@ -4,7 +4,7 @@ const {blue, red} = require('./colors.json');
 const {Client, Collection, MessageEmbed} = require('discord.js');
 const client = new Client();
 client.commands = new Collection();
-client.queue = new Collection();
+let queue = [];
 const cmdFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of cmdFiles) {
@@ -65,7 +65,12 @@ client.on('message', message => {
     }
 
     try {
-        command.execute(message, args, client);
+        if (commandName === "play"){
+            queue = command.execute(message, args, client, queue);
+        } else {
+            command.execute(message, args, client);
+        }
+        console.log(queue);
     } catch (error) {
         console.error(error);
         embedMsg

@@ -9,15 +9,12 @@ module.exports = {
     agrs: true,
     usage: "<search query>",
     guildOnly: true,
-    async execute(message, args, client){
+    async execute(message, args, client, queue){
         let query = args.join(" ");
         getInfo(query).then(async info => {
             query = info.items[0].id;
-            const connection = await message.member.voice.channel.join();
-            const dispatcher = connection.play(await ytdl(query), {type: "opus"});
-            dispatcher.on('finish', () => {
-                connection.disconnect();
-            });
+            queue.push(query);
+            return queue;
         });
     }
 }
