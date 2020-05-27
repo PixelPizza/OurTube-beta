@@ -66,8 +66,12 @@ client.on('message', async message => {
         return message.channel.send(embedMsg);
     }
 
-    function playSong(){
+    async function playSong(){
         if (client.connection){
+            if (!client.queue.length){
+                playSong();
+                return;
+            }
             client.dispatcher = client.connection.play(client.queue[0]);
             client.dispatcher.on('finish', () => {
                 if (!client.loop){
