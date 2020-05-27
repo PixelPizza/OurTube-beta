@@ -11,10 +11,9 @@ module.exports = {
     guildOnly: true,
     async execute(message, args, client, queue){
         let query = args.join(" ");
-        getInfo(query).then(async info => {
-            query = info.items[0].id;
-            queue.push(query);
-            return queue;
-        });
+        let info = await getInfo(query);
+        query = info.items[0].id;
+        queue.push(query);
+        return queue;
     }
 }
