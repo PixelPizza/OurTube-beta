@@ -8,7 +8,7 @@ module.exports = {
     aliases: ['j'],
     args: false,
     guildOnly: true,
-    execute(message, args, client){
+    async execute(message, args, client){
         const embedMsg = new MessageEmbed()
             .setColor(blue)
             .setTitle(`${muscialEmojis[Math.floor(Math.random() * muscialEmojis.length)]} Join ${muscialEmojis[Math.floor(Math.random() * muscialEmojis.length)]}`)

@@ -17,7 +17,7 @@ client.on('ready', () => {
     console.log('ready for music!');
 });
 
-client.on('message', message => {
+client.on('message', async message => {
     if (!message.content.startsWith(prefix) || message.author.bot || message.webhookID || message.channel.id !== channels.music) return;
 
     const args = message.content.slice(prefix.length).split(/ +/);
@@ -65,7 +65,7 @@ client.on('message', message => {
     }
 
     try {
-        command.execute(message, args, client);
+        await command.execute(message, args, client);
         console.log(client.queue);
     } catch (error) {
         console.error(error);
