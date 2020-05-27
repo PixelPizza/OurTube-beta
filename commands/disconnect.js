@@ -16,6 +16,9 @@ module.exports = {
 
         message.member.voice.channel.leave();
         client.connection = null;
+        client.dispatcher = null;
+        client.loop = false;
+        client.queue = [];
         message.channel.send(embedMsg);
     }
 }
