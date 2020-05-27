@@ -93,11 +93,10 @@ client.on('message', async message => {
     try {
         await command.execute(message, args, client);
         const clientMember = message.guild.members.cache.get(client.user.id);
-        setTimeout(function() {
-            if (!client.dispatcher && clientMember.voice.channel){
-                playSong();
-            }
-        }, 1000);
+        console.log(client.queue);
+        if (!client.dispatcher && clientMember.voice.channel){
+            playSong();
+        }
     } catch (error) {
         console.error(error);
         embedMsg
