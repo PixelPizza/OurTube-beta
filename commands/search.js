@@ -67,8 +67,8 @@ module.exports = {
                 if (isNaN(msg.content) || parseInt(msg.content) > results.length || parseInt(msg.content) < 1){
                     return collectPlay(mess);
                 }
-                args = [results[parseInt(msg.content) - 1].link];
-                client.commands.get("play").execute(message, args, client);
+                const url = results[parseInt(msg.content) - 1].link;
+                client.queue.push(url);
             });
         }
 
