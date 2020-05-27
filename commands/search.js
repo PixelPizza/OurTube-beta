@@ -41,6 +41,14 @@ module.exports = {
 
         results = results.results;
 
+        if (!results.length){
+            embedMsg
+                .setColor(red)
+                .setDescription(`No videos found`);
+
+            return message.channel.send(embedMsg);
+        }
+
         var atResult = 1;
         results.forEach(result => {
             embedMsg.addField(`${atResult}. ${result.channelTitle}`, `[${result.title}](${result.link})`);
