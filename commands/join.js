@@ -14,7 +14,7 @@ module.exports = {
             .setTitle(`${muscialEmojis[Math.floor(Math.random() * muscialEmojis.length)]} Join ${muscialEmojis[Math.floor(Math.random() * muscialEmojis.length)]}`)
             .setDescription(`Joined \`${message.member.voice.channel.name}\``);
 
-        message.member.voice.channel.join();
+        client.connection = await message.member.voice.channel.join();
         message.channel.send(embedMsg);
     }
 }

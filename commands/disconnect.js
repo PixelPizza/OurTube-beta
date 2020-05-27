@@ -15,6 +15,7 @@ module.exports = {
             .setDescription(`disconnected from \`${message.member.voice.channel.name}\``);
 
         message.member.voice.channel.leave();
+        client.connection = null;
         message.channel.send(embedMsg);
     }
 }

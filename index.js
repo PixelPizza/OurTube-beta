@@ -5,6 +5,8 @@ const {Client, Collection, MessageEmbed} = require('discord.js');
 const client = new Client();
 client.commands = new Collection();
 client.queue = [];
+client.loop = false;
+client.connection = null;
 const cmdFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of cmdFiles) {
@@ -64,9 +66,26 @@ client.on('message', async message => {
         return message.channel.send(embedMsg);
     }
 
+    function playSong(){
+        if (client.connection){
+            client.dispatcher = client.connection.play(client.queue[0]);
+            client.dispatcher.on('finish', () => {
+                if (!client.loop){
+                    client.queue.shift();
+                }
+                playSong();
+            });
+        } else {
+            client.dispatcher = null;
+        }
+    }
+
     try {
         await command.execute(message, args, client);
-        console.log(client.queue);
+        const clientMember = message.guild.members.cache.get(client.user.id);
+        if (!client.dispatcher && clientMember.voice.channel){
+            playSong();
+        }
     } catch (error) {
         console.error(error);
         embedMsg
