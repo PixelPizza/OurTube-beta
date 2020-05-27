@@ -1,4 +1,12 @@
 {
     "token": "NzE0NjA5NjE3ODYyMzkzOTE3.XsxKGQ.n5aYFl2OvPub9PHk5OXua9BtMqE",
-    "prefix": "pp"
+    "prefix": "pp",
+    "muscialEmojis": ["♩", "♪", "♫", "♬", "♭", "♮", "♯", "ø", "🎶", "🎵", "🎼", "🎧", "🎤", "🎹", "🎸", "🎻", "📯", "🎷", "🎺", "📻"],
+    "channels": {
+        "music": "712067253750857819"
+    },
+    "voiceChannels": {
+        "music": "712058631234781185"
+    },
+    "youtube_api_key": "AIzaSyBiClwzwPKBNuCGrOCRTHNTeCFfPGoYvls"
 }

@@ -1,9 +1,10 @@
 const fs = require('fs');
-const {token, prefix} = require('./config.json');
+const {token, prefix, channels, voiceChannels} = require('./config.json');
 const {blue, red} = require('./colors.json');
 const {Client, Collection, MessageEmbed} = require('discord.js');
 const client = new Client();
 client.commands = new Collection();
+client.queue = new Collection();
 const cmdFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of cmdFiles) {
@@ -12,11 +13,12 @@ for (const file of cmdFiles) {
 }
 
 client.on('ready', () => {
+    client.user.setActivity("still in development", {type: "WATCHING"});
     console.log('ready for music!');
 });
 
 client.on('message', message => {
-    if (!message.content.startsWith(prefix) || message.author.bot || message.webhookID) return;
+    if (!message.content.startsWith(prefix) || message.author.bot || message.webhookID || message.channel.id !== channels.music) return;
 
     const args = message.content.slice(prefix.length).split(/ +/);
     const commandName = args.shift().toLowerCase();
@@ -29,16 +31,16 @@ client.on('message', message => {
 
     const embedMsg = new MessageEmbed()
         .setColor(blue)
-        .setAuthor(message.author.username, message.author.displayAvatarURL())
         .setThumbnail(message.author.displayAvatarURL())
         .setTimestamp()
         .setFooter(client.user.username, client.user.displayAvatarURL());
 
-    if (!message.member.voice.channel){
+    if (!message.member.voice.channel || message.member.voice.channel.id !== voiceChannels.music){
         embedMsg
             .setColor(red)
-            .setTitle("No voice channel")
-            .setDescription(`You are not in a voice channel, please join a voice channel and try again!`);
+            .setTitle("Error 404")
+            .setDescription(`Voice channel not found`)
+            .setThumbnail("https://cdn.shopify.com/s/files/1/1061/1924/products/Anguished_Face_Emoji_1024x1024.png");
 
         return message.channel.send(embedMsg);
     }

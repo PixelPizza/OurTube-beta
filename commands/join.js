@@ -1,5 +1,6 @@
 const {MessageEmbed} = require('discord.js');
-const {blue, red} = require('../colors.json');
+const {blue} = require('../colors.json');
+const {muscialEmojis} = require('../config.json');
 
 module.exports = {
     name: "join",
@@ -10,8 +11,10 @@ module.exports = {
     execute(message, args, client){
         const embedMsg = new MessageEmbed()
             .setColor(blue)
-            .setTitle("Join");
+            .setTitle(`${muscialEmojis[Math.floor(Math.random() * muscialEmojis.length)]} Join ${muscialEmojis[Math.floor(Math.random() * muscialEmojis.length)]}`)
+            .setDescription(`Joined \`${message.member.voice.channel.name}\``);
 
         message.member.voice.channel.join();
+        message.channel.send(embedMsg);
     }
 }
