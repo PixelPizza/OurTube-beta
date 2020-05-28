@@ -37,8 +37,7 @@ module.exports = {
             client.queue = [];
             client.dispatcher.end();
         }
-        client.dispatcher = null;
-        console.log(client.queue);
+        //client.dispatcher = null;
         message.channel.send(embedMsg);
     }
 }

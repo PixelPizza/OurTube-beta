@@ -30,10 +30,10 @@ module.exports = {
                 return message.channel.send(embedMsg);
             }
             const videoId = info.items[0].id;
-            if (!client.queue){
+            if (!client.queue.length){
                 embedMsg.setDescription(`Now Playing \`${info.items[0].fulltitle}\``);
             } else {
-                embedMsg.setDescription(`\`[${info.items[0].fulltitle}](https://youtube.com/watch?v=${info.items[0].id})\` has been added to the queue`);
+                embedMsg.setDescription(`[${info.items[0].fulltitle}](https://youtube.com/watch?v=${info.items[0].id}) has been added to the queue`);
             }
             client.queue.push(videoId);
             message.channel.send(embedMsg);
