@@ -31,7 +31,6 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        client.dispatcher.disconnect();
         client.dispatcher = null;
         client.queue.shift();
         message.channel.send(embedMsg);
