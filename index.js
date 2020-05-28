@@ -26,12 +26,10 @@ client.on('ready', () => {
 client.on('message', async message => {
     const embedMsg = new MessageEmbed()
         .setColor(blue)
-        .setThumbnail(message.author.displayAvatarURL())
-        .setTimestamp()
-        .setFooter(client.user.username, client.user.displayAvatarURL());
+        .setTimestamp();
 
     if (message.content === "<@714609617862393917>" || message.content === "<@!714609617862393917>"){
-        embedMsg.setDescription(`My current prefix is ${client.prefix}`);
+        embedMsg.setTitle("Prefix").setDescription(`My current prefix is ${client.prefix}`);
         message.channel.send(embedMsg);
     }
 
