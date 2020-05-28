@@ -33,9 +33,7 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        if (client.queue.length > 1){
-            client.queue.shift();
-        } else {
+        if (client.queue.length == 1){
             client.queue = [];
         }
         console.log(client.queue);
