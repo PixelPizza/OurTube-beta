@@ -95,7 +95,9 @@ module.exports = {
                 }
                 const videoId = results[parseInt(msg.content) - 1].id;
                 client.queue.push(videoId);
-                playSong();
+                if (client.queue.length === 1){
+                    playSong();
+                }
             });
         }
 
