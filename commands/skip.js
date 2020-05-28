@@ -22,6 +22,8 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
+        console.log(client.queue);
+
         if (!client.queue.length){
             embedMsg
                 .setColor(red)
@@ -33,11 +35,10 @@ module.exports = {
 
         if (client.queue.length > 1){
             client.queue.shift();
-            client.dispatcher.end();
         } else {
             client.queue = [];
-            client.dispatcher.end();
         }
+        client.dispatcher.end();
         client.dispatcher = null;
         message.channel.send(embedMsg);
     }
