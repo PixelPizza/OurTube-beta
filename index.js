@@ -35,7 +35,7 @@ client.on('message', async message => {
 
     if (!message.content.startsWith(client.prefix) || message.author.bot || message.webhookID || message.channel.id !== channels.music) return;
 
-    const args = message.content.slice(prefix.length).split(/ +/);
+    const args = message.content.slice(client.prefix.length).split(/ +/);
     const commandName = args.shift().toLowerCase();
 
     console.log(commandName);
