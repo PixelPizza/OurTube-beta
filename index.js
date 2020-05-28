@@ -29,7 +29,7 @@ client.on('message', async message => {
         .setTimestamp();
 
     if (message.content === "<@714609617862393917>" || message.content === "<@!714609617862393917>"){
-        embedMsg.setTitle("Prefix").setDescription(`My current prefix is ${client.prefix}`);
+        embedMsg.setTitle("Prefix").setDescription(`My current prefix is \`${client.prefix}\``);
         message.channel.send(embedMsg);
     }
 
