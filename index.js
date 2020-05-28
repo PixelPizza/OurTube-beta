@@ -10,6 +10,7 @@ client.loop = false;
 client.connection = null;
 client.dispatcher = null;
 client.volume = 50;
+client.prefix = prefix;
 const cmdFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of cmdFiles) {
@@ -23,7 +24,7 @@ client.on('ready', () => {
 });
 
 client.on('message', async message => {
-    if (!message.content.startsWith(prefix) || message.author.bot || message.webhookID || message.channel.id !== channels.music) return;
+    if (!message.content.startsWith(client.prefix) || message.author.bot || message.webhookID || message.channel.id !== channels.music) return;
 
     const args = message.content.slice(prefix.length).split(/ +/);
     const commandName = args.shift().toLowerCase();

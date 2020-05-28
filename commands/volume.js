@@ -1,6 +1,5 @@
 const {MessageEmbed} = require('discord.js');
 const {blue, red} = require('../colors.json');
-const {prefix} = require('../config.json');
 
 module.exports = {
     name: "volume",
@@ -29,7 +28,7 @@ module.exports = {
         if (args.length > 1){
             embedMsg
                 .setColor(red)
-                .setDescription(`${prefix}${this.name} takes one argument! The proper usage is ${prefix}${this.name} ${this.usage}`);
+                .setDescription(`${client.prefix}${this.name} takes one argument! The proper usage is ${client.prefix}${this.name} ${this.usage}`);
         
             return message.channel.send(embedMsg);
         }
