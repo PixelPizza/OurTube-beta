@@ -24,6 +24,17 @@ client.on('ready', () => {
 });
 
 client.on('message', async message => {
+    const embedMsg = new MessageEmbed()
+        .setColor(blue)
+        .setThumbnail(message.author.displayAvatarURL())
+        .setTimestamp()
+        .setFooter(client.user.username, client.user.displayAvatarURL());
+
+    if (message.content === "<@714609617862393917>" || message.content === "<@!714609617862393917>"){
+        embedMsg.setDescription(`My current prefix is ${client.prefix}`);
+        message.channel.send(embedMsg);
+    }
+
     if (!message.content.startsWith(client.prefix) || message.author.bot || message.webhookID || message.channel.id !== channels.music) return;
 
     const args = message.content.slice(prefix.length).split(/ +/);
@@ -43,12 +54,6 @@ client.on('message', async message => {
         client.loop = false;
         client.volume = 50;
     }
-
-    const embedMsg = new MessageEmbed()
-        .setColor(blue)
-        .setThumbnail(message.author.displayAvatarURL())
-        .setTimestamp()
-        .setFooter(client.user.username, client.user.displayAvatarURL());
 
     if (!message.member.voice.channel || message.member.voice.channel.id !== voiceChannels.music){
         embedMsg

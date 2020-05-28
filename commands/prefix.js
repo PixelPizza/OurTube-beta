@@ -4,13 +4,17 @@ const {blue, red} = require('../colors.json');
 module.exports = {
     name: "prefix",
     description: "change prefix",
-    args: true,
     usage: "<prefix>",
     guildOnly: true,
     execute(message, args, client){
         const embedMsg = new MessageEmbed()
             .setColor(blue)
             .setTitle("Prefix");
+
+        if (!args.length){
+            embedMsg.setDescription(`The current prefix is \`${client.prefix}\``);
+            return message.channel.send(embedMsg);
+        }
 
         if (args.length > 1){
             embedMsg
