@@ -1,5 +1,6 @@
 const fs = require('fs');
 const ytdl = require('ytdl-core-discord');
+const playArbitraryFFmpeg = require('discord.js-arbitrary-ffmpeg');
 const {token, prefix, channels, voiceChannels} = require('./config.json');
 const {blue, red} = require('./colors.json');
 const {Client, Collection, MessageEmbed} = require('discord.js');
@@ -91,7 +92,12 @@ client.on('message', async message => {
                 }, 1000);
                 return;
             }
-            client.dispatcher = client.connection.play(await ytdl(client.queue[0], {quality: 'highestaudio', filter: 'audioonly', highWaterMark: 2000}), {type: "opus", volume: client.volume / 100, seek: 10});
+            let stream = await ytdl(client.queue[0], {quality: 'highestaudio', filter: 'audioonly', highWaterMark: 2000});
+            let arrFFmpegParams = [
+                '-i', stream,
+                '-filter:a', 'asetrate=r=66K'
+            ];
+            client.dispatcher = playArbitraryFFmpeg(client.connection, arrFFmpegParams, {volume: client.volume});
             client.seek = 0;
             client.dispatcher.on('finish', () => {
                 if (!client.loop || command.name === "skip"){
