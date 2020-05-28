@@ -11,6 +11,7 @@ client.connection = null;
 client.dispatcher = null;
 client.volume = 50;
 client.prefix = prefix;
+client.seek = 0;
 const cmdFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of cmdFiles) {
@@ -91,6 +92,7 @@ client.on('message', async message => {
                 return;
             }
             client.dispatcher = client.connection.play(await ytdl(client.queue[0]), {type: "opus", highWaterMark: 50, volume: client.volume / 100, seek: 10});
+            client.seek = 0;
             client.dispatcher.on('finish', () => {
                 if (!client.loop || command.name === "skip"){
                     client.queue.shift();
