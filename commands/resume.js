@@ -35,7 +35,7 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        client.dispatcher.pause();
+        client.dispatcher.resume();
         message.channel.send(embedMsg);
     }
 }
