@@ -33,7 +33,7 @@ module.exports = {
 
         if (client.queue.length > 1){
             client.queue.shift();
-            client.dispatcher = null;
+            client.dispatcher.end();
         } else {
             client.queue = [];
             client.dispatcher.end();
