@@ -20,6 +20,7 @@ module.exports = {
             client.dispatcher = null;
             client.loop = false;
             client.queue = [];
+            client.volume = 50;
         } else {
             embedMsg
                 .setColor(red)

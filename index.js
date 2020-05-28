@@ -9,7 +9,7 @@ client.queue = [];
 client.loop = false;
 client.connection = null;
 client.dispatcher = null;
-client.volume = 100;
+client.volume = 50;
 const cmdFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of cmdFiles) {
@@ -40,6 +40,7 @@ client.on('message', async message => {
         client.dispatcher = null;
         client.queue = [];
         client.loop = false;
+        client.volume = 50;
     }
 
     const embedMsg = new MessageEmbed()

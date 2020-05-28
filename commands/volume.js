@@ -6,7 +6,6 @@ module.exports = {
     name: "volume",
     description: "change volume",
     aliases: ['vol'],
-    args: true,
     usage: "<volume percentage>",
     guildOnly: true,
     execute(message, args, client){
@@ -20,6 +19,10 @@ module.exports = {
                 .setDescription(`I'm not playing anything!`);
 
             return message.channel.send(embedMsg);
+        }
+
+        if (!args.length){
+            embedMsg.setDescription(`The current volume is ${client.volume}`);
         }
 
         if (args.length > 1){
@@ -50,7 +53,7 @@ module.exports = {
 
         client.dispatcher.setVolume(volume / 100);
         client.volume = volume;
-        embedMsg.setDescription(`The volume is now ${volume}%`);
+        embedMsg.setDescription(`The volume has been changed to ${volume}%`);
         message.channel.send(embedMsg);
     }
 }
