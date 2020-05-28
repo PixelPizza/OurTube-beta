@@ -22,7 +22,7 @@ module.exports = {
         }
 
         if (!args.length){
-            embedMsg.setDescription(`The current volume is ${client.volume}`);
+            embedMsg.setDescription(`The current volume is ${client.volume}%`);
             return message.channel.send(embedMsg);
         }
 
