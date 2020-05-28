@@ -22,7 +22,7 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        if (!client.dispatcher || !client.queue.length){
+        if (!client.queue.length){
             embedMsg
                 .setColor(red)
                 .setTitle("Not Playing")
