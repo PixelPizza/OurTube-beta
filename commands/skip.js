@@ -38,6 +38,7 @@ module.exports = {
             client.queue = [];
             client.dispatcher.end();
         }
+        client.dispatcher = null;
         message.channel.send(embedMsg);
     }
 }
