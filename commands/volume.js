@@ -14,6 +14,14 @@ module.exports = {
             .setColor(blue)
             .setTitle("Volume");
 
+        if (!client.dispatcher){
+            embedMsg
+                .setColor(red)
+                .setDescription(`I'm not playing anything!`);
+
+            return message.channel.send(embedMsg);
+        }
+
         if (args.length > 1){
             embedMsg
                 .setColor(red)
@@ -41,6 +49,7 @@ module.exports = {
         }
 
         client.dispatcher.setVolume(volume / 100);
+        client.volume = volume;
         embedMsg.setDescription(`The volume is now ${volume}%`);
         message.channel.send(embedMsg);
     }
