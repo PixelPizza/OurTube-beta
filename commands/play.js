@@ -1,7 +1,7 @@
 const {MessageEmbed} = require('discord.js');
 const {getInfo} = require('ytdl-getinfo');
 const {blue, red} = require('../colors.json');
-const {pizzaGuild} = require('../config.json');
+const {pizzaGuild, emojis} = require('../config.json');
 
 module.exports = {
     name: "play",
