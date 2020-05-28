@@ -33,11 +33,11 @@ module.exports = {
 
         if (client.queue.length > 1){
             client.queue.shift();
+            client.dispatcher = null;
         } else {
             client.queue = [];
             client.dispatcher.end();
         }
-        //client.dispatcher = null;
         message.channel.send(embedMsg);
     }
 }
