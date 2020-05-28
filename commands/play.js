@@ -16,6 +16,7 @@ module.exports = {
         getInfo(query).then(async info => {
             const videoId = info.items[0].id;
             client.queue.push(videoId);
+            console.log(info.items[0]);
         });
     }
 }
