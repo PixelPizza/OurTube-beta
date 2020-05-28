@@ -9,7 +9,7 @@ module.exports = {
     execute(message, args, client){
         const embedMsg = new MessageEmbed()
             .setColor(blue)
-            .setTitle(":repeat_one: Loop");
+            .setTitle("🔂 Loop");
         
         if (!client.connection){
             embedMsg

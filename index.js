@@ -84,7 +84,7 @@ client.on('message', async message => {
                 }, 1000);
                 return;
             }
-            client.dispatcher = client.connection.play(await ytdl(client.queue[0]), {type: "opus"});
+            client.dispatcher = client.connection.play(await ytdl(client.queue[0]), {type: "opus", highWaterMark: 50});
             client.dispatcher.on('finish', () => {
                 if (!client.loop){
                     client.queue.shift();

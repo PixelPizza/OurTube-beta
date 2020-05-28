@@ -8,5 +8,9 @@
     "voiceChannels": {
         "music": "712058631234781185"
     },
-    "youtube_api_key": "AIzaSyBiClwzwPKBNuCGrOCRTHNTeCFfPGoYvls"
+    "youtube_api_key": "AIzaSyBiClwzwPKBNuCGrOCRTHNTeCFfPGoYvls",
+    "pizzaGuild": "709698572035162143",
+    "emojis": {
+        "play": "715482193735974953"
+    }
 }
