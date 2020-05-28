@@ -38,6 +38,7 @@ module.exports = {
         } else {
             client.queue = [];
         }
+        console.log(client.queue);
         client.dispatcher.end();
         client.dispatcher = null;
         message.channel.send(embedMsg);
