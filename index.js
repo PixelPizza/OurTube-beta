@@ -96,7 +96,7 @@ client.on('message', async message => {
                 }, 1000);
                 return;
             }
-            client.dispatcher = client.connection.play(await ytdl(client.queue[0], {quality: 'highestaudio', filter: 'audioonly', highWaterMark: 2000}), {type: "opus", highWaterMark: 2000, seek: client.seek});
+            client.dispatcher = client.connection.play(await ytdl(client.queue[0], {quality: 'highestaudio'}), {type: "opus", highWaterMark: 2000, seek: client.seek});
             client.dispatcher.setVolume(client.volume / 100);
             client.seek = 0;
             client.dispatcher.on('finish', () => {
