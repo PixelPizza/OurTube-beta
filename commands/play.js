@@ -33,6 +33,7 @@ module.exports = {
             const link = `[${info.items[0].fulltitle}](https://youtube.com/watch?v=${info.items[0].id})`;
             if (!client.queue.length){
                 embedMsg.setDescription(`Now Playing ${link}`);
+                client.nowPlaying = videoId;
             } else {
                 embedMsg.setDescription(`${link} has been added to the queue`);
             }

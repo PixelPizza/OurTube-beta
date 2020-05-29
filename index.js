@@ -14,6 +14,8 @@ client.volume = 50;
 client.prefix = prefix;
 client.replay = false;
 client.seek = 0;
+client.shuffle = false;
+client.nowPlaying;
 const cmdFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of cmdFiles) {
@@ -94,7 +96,8 @@ client.on('message', async message => {
                 }, 1000);
                 return;
             }
-            client.dispatcher = client.connection.play(await ytdl(client.queue[0], {quality: 'highestaudio', filter: 'audioonly', highWaterMark: 2000}), {type: "opus", volume: client.volume / 100, seek: 10});
+            client.dispatcher = client.connection.play(await ytdl(client.queue[0], {quality: 'highestaudio', filter: 'audioonly', highWaterMark: 2000}), {type: "opus", seek: 10});
+            client.dispatcher.setVolume(client.volume / 100);
             client.seek = 0;
             client.dispatcher.on('finish', () => {
                 if (!client.loop && !client.replay || command.name === "skip"){
@@ -102,6 +105,7 @@ client.on('message', async message => {
                 } else if (client.replay){
                     client.replay = false;
                 }
+                client.nowPlaying = client.queue[0];
                 setTimeout(function() {
                     playSong();
                 }, 1000);
