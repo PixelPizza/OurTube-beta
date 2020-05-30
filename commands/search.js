@@ -87,6 +87,9 @@ module.exports = {
                 if (msg.content.toLowerCase() === "cancel"){
                     return mess.edit(cancelEmbed);
                 }
+                if (msg.content.toLowerCase() === "random"){
+                    msg.content = `${Math.floor(Math.random() * results.length)}`;
+                }
                 if (isNaN(msg.content) || parseInt(msg.content) > results.length || parseInt(msg.content) < 1){
                     return collectPlay(mess);
                 }
