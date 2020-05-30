@@ -24,6 +24,14 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
+        if (args[0].length > 30){
+            embedMsg
+                .setColor(red)
+                .setDescription(`The maximum length of the prefix is 30 characters!`);
+
+            return message.channel.send(embedMsg);
+        }
+
         client.prefix = args[0];
         embedMsg.setDescription(`The prefix has been set to \`${client.prefix}\``);
         message.channel.send(embedMsg);
