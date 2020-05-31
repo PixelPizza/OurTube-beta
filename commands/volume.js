@@ -43,10 +43,10 @@ module.exports = {
 
         const volume = parseInt(args);
 
-        if (volume < 1 || volume > 100){
+        if (volume < 1 || volume > 200){
             embedMsg
                 .setColor(red)
-                .setDescription(`The volume percentage should be a number between 1% and 100%`);
+                .setDescription(`The volume percentage should be a number between 1% and 200%`);
 
             return message.channel.send(embedMsg);
         }
