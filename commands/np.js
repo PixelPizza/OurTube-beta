@@ -1,5 +1,6 @@
 const {MessageEmbed} = require('discord.js');
 const {getInfo} = require('ytdl-getinfo');
+const {blue, red} = require('../colors.json');
 
 module.exports = {
     name: "np",
