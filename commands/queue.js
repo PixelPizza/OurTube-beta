@@ -30,7 +30,7 @@ module.exports = {
         }
 
         client.queue.forEach(async videoId => {
-            let result = await getInfo(videoId);
+            let result = await getInfo(videoId).items[0];
             console.log(result);
         });
     }
