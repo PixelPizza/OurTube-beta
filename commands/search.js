@@ -107,6 +107,6 @@ module.exports = {
 
         message.channel.send(embedMsg).then(msg => {
             collectPlay(msg);
-        });
+        }).catch(console.error);
     }
 }
