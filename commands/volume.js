@@ -36,17 +36,17 @@ module.exports = {
         if (isNaN(args[0])){
             embedMsg
                 .setColor(red)
-                .setDescription(`The volume percentage should be a number!`);
+                .setDescription(`The volume percentage should be a round number!`);
 
             return message.channel.send(embedMsg);
         }
 
         const volume = parseInt(args);
 
-        if (volume < 0 || volume > 100){
+        if (volume < 1 || volume > 100){
             embedMsg
                 .setColor(red)
-                .setDescription(`The volume percentage should be a number between 0% and 100%`);
+                .setDescription(`The volume percentage should be a number between 1% and 100%`);
 
             return message.channel.send(embedMsg);
         }
