@@ -32,6 +32,7 @@ module.exports = {
         client.queue.forEach(async videoId => {
             let result = await getInfo(videoId);
             result = result.items[0];
+            console.log(result);
         });
     }
 }
