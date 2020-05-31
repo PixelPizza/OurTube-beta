@@ -47,7 +47,7 @@ module.exports = {
                 }
                 duration = `${hours}:${duration}`;
             }
-            let video = `${result.creator} | [${result.fulltitle}](https://www.youtube.com/watch?v=${videoId}) | \`${duration}\``;
+            let video = `${result.creator} | [${result.fulltitle}](https://www.youtube.com/watch?v=${client.queue[0]}) | \`${duration}\``;
             embedMsg.setDescription(video);
             message.channel.send(embedMsg);
         });
