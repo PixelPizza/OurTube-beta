@@ -59,8 +59,9 @@ module.exports = {
                 embedMsg.fields[1].value = `${embedMsg.fields[1].value}\n\n${count}. ${video}`;
             }
             count++;
+            if (count == client.queue.length - 1){
+                message.channel.send(embedMsg);
+            }
         });
-
-        message.channel.send(embedMsg);
     }
 }
