@@ -1,17 +1,15 @@
 const {MessageEmbed} = require('discord.js');
 const {getInfo} = require('ytdl-getinfo');
-const {blue, red} = require('../colors.json');
 
 module.exports = {
-    name: "queue",
-    description: "show the queue",
-    aliases: ['q'],
+    name: "np",
+    description: "see what's currently playing",
     args: false,
     guildOnly: true,
-    async execute(message, args, client){
+    execute(message, args, client){
         const embedMsg = new MessageEmbed()
             .setColor(blue)
-            .setTitle("Queue");
+            .setTitle("Now Playing");
 
         if (!client.connection){
             embedMsg
@@ -29,10 +27,8 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        let count = 0;
-        client.queue.forEach(async videoId => {
-            let result = await getInfo(videoId);
-            result = result.items[0];
+        getInfo(client.queue[0]).then(info => {
+            let result = info.items[0];
             let hours = Math.floor(result.duration / 3600);
             let seconds = result.duration % 3600;
             let minutes = Math.floor(seconds / 60);
@@ -51,17 +47,8 @@ module.exports = {
                 duration = `${hours}:${duration}`;
             }
             let video = `${result.creator} | [${result.fulltitle}](https://www.youtube.com/watch?v=${videoId}) | \`${duration}\``;
-            if (!embedMsg.fields.length){
-                embedMsg.addField("__Now Playing__", video);
-            } else if (embedMsg.fields.length == 1) {
-                embedMsg.addField("__Up Next__", `${count}. ${video}`);
-            } else {
-                embedMsg.fields[1].value = `${embedMsg.fields[1].value}\n\n${count}. ${video}`;
-            }
-            count++;
-            if (count == client.queue.length){
-                message.channel.send(embedMsg);
-            }
+            embedMsg.setDescription(video);
+            message.channel.send(embedMsg);
         });
     }
 }
