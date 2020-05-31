@@ -30,7 +30,7 @@ module.exports = {
         }
 
         let count = 0;
-        client.queue.forEach(async videoId => {
+        for(let videoId in client.queue){
             let result = await getInfo(videoId);
             result = result.items[0];
             let hours = Math.floor(result.duration / 3600);
