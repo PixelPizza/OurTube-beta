@@ -112,7 +112,11 @@ client.on('message', async message => {
                     playSong();
                 }, 1000);
             });
-            client.dispatcher.on('error', console.error);
+            client.dispatcher.on('error', error => {
+                console.error(error);
+                embedMsg.setColor(red).setDescription(`I am currently unavailable! Sorry for the inconvenience! Please try again soon`).addField("Error", error);
+                return message.channel.send(embedMsg);
+            });
         } else {
             client.dispatcher = null;
         }
