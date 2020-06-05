@@ -28,6 +28,15 @@ client.on('ready', () => {
     console.log('ready for music!');
 });
 
+process.on('unhandledRejection', error => {
+    console.error('Unhandled promise rejection:', error);
+    console.log(error.name);
+});
+
+client.on('error', error => {
+    console.error('The websocket connection encountered an error:', error);
+});
+
 client.on('message', async message => {
     const embedMsg = new MessageEmbed()
         .setColor(blue)
@@ -112,11 +121,7 @@ client.on('message', async message => {
                     playSong();
                 }, 1000);
             });
-            client.dispatcher.on('error', error => {
-                console.error(error);
-                embedMsg.setColor(red).setDescription(`I am currently unavailable! Sorry for the inconvenience! Please try again soon`).addField("Error", error);
-                return message.channel.send(embedMsg);
-            });
+            client.dispatcher.on('error', console.error);
         } else {
             client.dispatcher = null;
         }
