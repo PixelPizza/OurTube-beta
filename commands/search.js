@@ -96,12 +96,19 @@ module.exports = {
                 if (!client.connection){
                     client.connection = await message.member.voice.channel.join();
                 }
-                const videoId = results[parseInt(msg.content) - 1].id;
+                const index = parseInt(msg.content) - 1;
+                const videoId = results[index].id;
+                let resultTitle = results[index].title.replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, "&");
                 client.queue.push(videoId);
+                const link = `[${resultTitle}](${results[index].link})`;
                 if (client.queue.length === 1){
                     client.nowPlaying = videoId;
-                    playSong();
+                    cancelEmbed.setDescription(`Now Playing ${link}`);
+                    mess.edit(cancelEmbed);
+                    return playSong();
                 }
+                cancelEmbed.setDescription(`${link} has been added to the queue`);
+                mess.edit(cancelEmbed);
             });
         }
 
