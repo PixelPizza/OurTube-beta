@@ -30,7 +30,12 @@ module.exports = {
 
         const query = args.join(" ");
         
-        let results = await search(query, opts)
+        let results;
+        try {
+            results = await search(query, opts)
+        } catch (error) {
+            console.log(error.response.data);
+        }
 
         if (!results){
             cancelEmbed
