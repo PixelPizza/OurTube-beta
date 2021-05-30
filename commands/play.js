@@ -1,7 +1,6 @@
 const {MessageEmbed} = require('discord.js');
 const {getInfo} = require('ytdl-getinfo');
 const {blue, red} = require('../colors.json');
-const {pizzaGuild, emojis} = require('../config.json');
 
 module.exports = {
     name: "play",
@@ -11,8 +10,6 @@ module.exports = {
     usage: "<search query>",
     guildOnly: true,
     async execute(message, args, client){
-        const guild = client.guilds.cache.get(pizzaGuild);
-        const play = guild.emojis.cache.get(emojis.play);
         const embedMsg = new MessageEmbed()
                 .setColor(blue)
                 .setTitle(`${play} Play`);
