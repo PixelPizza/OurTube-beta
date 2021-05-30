@@ -12,7 +12,7 @@ module.exports = {
     async execute(message, args, client){
         const embedMsg = new MessageEmbed()
                 .setColor(blue)
-                .setTitle(`${play} Play`);
+                .setTitle(`▶️ Play`);
 
         if (!client.connection){
             client.connection = await message.member.voice.channel.join();
