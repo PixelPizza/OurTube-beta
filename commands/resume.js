@@ -1,6 +1,5 @@
 const {MessageEmbed} = require('discord.js');
 const {blue, red} = require('../colors.json');
-const {pizzaGuild, emojis} = require('../config.json');
 
 module.exports = {
     name: "resume",
@@ -8,9 +7,7 @@ module.exports = {
     aliases: ['res'],
     args: false,
     guildOnly: true,
-    execute(message, args, client){
-        const guild = client.guilds.cache.get(pizzaGuild);
-        const play = guild.emojis.cache.get(emojis.play);
+    execute(message, args, client)
 
         const embedMsg = new MessageEmbed()
             .setColor(blue)
