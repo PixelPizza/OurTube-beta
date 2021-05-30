@@ -11,7 +11,7 @@ module.exports = {
 
         const embedMsg = new MessageEmbed()
             .setColor(blue)
-            .setTitle(`${play} Resume`)
+            .setTitle(`▶️ Resume`)
             .setDescription("Resuming song");
 
         if (!client.connection){
