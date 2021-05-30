@@ -1,7 +1,7 @@
 const fs = require('fs');
 const ytdl = require('ytdl-core-discord');
 var ffmpeg = require('ffmpeg');
-const {token, prefix, channels, voiceChannels} = require('./config.json');
+const {token, prefix} = require('./config.json');
 const {blue, red} = require('./colors.json');
 const {Client, Collection, MessageEmbed} = require('discord.js');
 const client = new Client();
