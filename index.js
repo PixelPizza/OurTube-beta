@@ -47,7 +47,7 @@ client.on('message', async message => {
         message.channel.send(embedMsg);
     }
 
-    if (!message.content.startsWith(client.prefix) || message.author.bot || message.webhookID || message.channel.id !== channels.music) return;
+    if (!message.content.startsWith(client.prefix) || message.author.bot || message.webhookID) return;
 
     const args = message.content.slice(client.prefix.length).split(/ +/);
     const commandName = args.shift().toLowerCase();
@@ -69,7 +69,7 @@ client.on('message', async message => {
     }
 
     if (command.name != "prefix"){
-        if (!message.member.voice.channel || message.member.voice.channel.id !== voiceChannels.music){
+        if (!message.member.voice.channel){
             embedMsg
                 .setColor(red)
                 .setTitle("Error 404")
