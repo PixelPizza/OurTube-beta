@@ -24,7 +24,7 @@ for (const file of cmdFiles) {
 }
 
 client.on('ready', () => {
-    client.user.setActivity("Sara F", {type: "STREAMING"});
+    client.user.setActivity("Playing Music", {type: "STREAMING"});
     console.log('ready for music!');
 });
 
