@@ -1,6 +1,4 @@
 {
-    "token": "ODQ4MjY3MzM2MDAzMDkyNDkw.YLKIhA.TKqN7SyUb2YhtuTzRfkUnRCPRtk",
     "prefix": "c",
-    "muscialEmojis": ["♩", "♪", "♫", "♬", "♭", "♮", "♯", "ø", "🎶", "🎵", "🎼", "🎧", "🎤", "🎹", "🎸", "🎻", "📯", "🎷", "🎺", "📻"],
-    "youtube_api_key": "AIzaSyDTBKOZgYJcdxJCFesNpDBAoEv6bScqxTc"
+    "muscialEmojis": ["♩", "♪", "♫", "♬", "♭", "♮", "♯", "ø", "🎶", "🎵", "🎼", "🎧", "🎤", "🎹", "🎸", "🎻", "📯", "🎷", "🎺", "📻"]
 }

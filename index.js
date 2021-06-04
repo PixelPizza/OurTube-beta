@@ -1,4 +1,9 @@
+const dotenv = require("dotenv");
 const fs = require('fs');
+
+// Add environment variables from .env if the file exists
+if(fs.existsSync(".env")) dotenv.config();
+
 const ytdl = require('ytdl-core-discord');
 var ffmpeg = require('ffmpeg');
 const {token, prefix} = require('./config.json');
@@ -143,4 +148,4 @@ client.on('message', async message => {
     }
 });
 
-client.login(token);
+client.login(process.env.BOT_TOKEN);
