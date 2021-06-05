@@ -24,7 +24,6 @@
     "dotenv": "^10.0.0",
     "ffmpeg": "0.0.4",
     "ffmpeg-static": "^4.2.2",
-    "opusscript": "0.0.7",
     "sodium": "^3.0.2",
     "youtube-loader": "^1.1.2",
     "youtube-search": "^1.1.6",
