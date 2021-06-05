@@ -2,11 +2,6 @@ const {MessageEmbed} = require('discord.js');
 const ytdl = require('ytdl-core-discord');
 const {blue, red} = require('../colors.json');
 const search = require('youtube-search');
-const opts = {
-    maxResults: 25,
-    key: process.env.YOUTUBE_API_KEY,
-    type: 'video'
-}
 
 module.exports = {
     name: "search",
@@ -31,7 +26,11 @@ module.exports = {
         
         let results;
         try {
-            results = await search(query, opts)
+            results = await search(query, {
+                maxResults: 25,
+                key: process.env.YOUTUBE_API_KEY,
+                type: 'video'
+            });
         } catch (error) {
             console.log(error.response.data);
         }
