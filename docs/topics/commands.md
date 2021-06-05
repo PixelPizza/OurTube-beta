@@ -1,5 +1,0 @@
-Commands
-===
-
-Making a command
----
