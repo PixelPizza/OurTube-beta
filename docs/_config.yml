@@ -1,1 +1,5 @@
-theme: jekyll-theme-slate
+name: OurTube
+description: A music discord bot
+url: "https://jttechnic.github.io/OurTube"
+markdown: kramdown
+highlighter: rouge
