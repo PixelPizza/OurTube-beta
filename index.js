@@ -3,6 +3,7 @@ const fs = require('fs');
 
 // Add environment variables from .env if the file exists
 if(fs.existsSync(".env")) dotenv.config();
+if(!fs.existsSync("blacklists.json")) fs.writeFileSync("blacklist.json", JSON.stringify([]));
 
 const ytdl = require('ytdl-core-discord');
 var ffmpeg = require('ffmpeg');
