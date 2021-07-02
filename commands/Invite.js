@@ -1,9 +1,14 @@
 module.exports = {
   name: "invite",
-  code: `$title[Music Bot invite links]
-  $description[
-   Recommended: [Click here]($getBotInvite)
-   Admin: [Click here](https://discord.com/api/oauth2/authorize?client_id=BOT_ID&permissions=8&scope=bot)
-  $footer[Thanks for Choosing Me]`
+  execute(message, args, client) {
+    message.channel.send(new MessageEmbed({
+      title: "Music Bot invite links",
+      description: stripIndents`
+        Recommended: [Click here](${client.generateInvite(YOUR_PERMISSIONS_HERE)})
+        Admin: [Click here](${client.generateInvite(Permissions.FLAGS.ADMINISTRATOR)})
+      `,
+      footer: "Thanks for choosing me"
+    }));
+  }
 }
 © 2021 GitHub, Inc.
