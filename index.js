@@ -74,16 +74,14 @@ client.on('message', async message => {
         client.volume = 50;
     }
 
-    if (command.name != "prefix"){
-        if (!message.member.voice.channel){
-            embedMsg
-                .setColor(red)
-                .setTitle("Error 404")
-                .setDescription(`Voice channel not found`)
-                .setThumbnail("https://cdn.shopify.com/s/files/1/1061/1924/products/Anguished_Face_Emoji_1024x1024.png");
+    if (command.needsVoice && !message.member.voice.channel){
+        embedMsg
+            .setColor(red)
+            .setTitle("Error 404")
+            .setDescription(`Voice channel not found`)
+            .setThumbnail("https://cdn.shopify.com/s/files/1/1061/1924/products/Anguished_Face_Emoji_1024x1024.png");
 
-            return message.channel.send(embedMsg);
-        }
+        return message.channel.send(embedMsg);
     }
 
     if (command.guildOnly && message.channel.type !== 'text') {

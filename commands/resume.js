@@ -7,6 +7,7 @@ module.exports = {
     aliases: ['res'],
     args: false,
     guildOnly: true,
+    needsVoice: true,
     execute(message, args, client){
 
         const embedMsg = new MessageEmbed()

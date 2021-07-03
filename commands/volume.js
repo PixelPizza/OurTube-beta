@@ -7,6 +7,7 @@ module.exports = {
     aliases: ['vol'],
     usage: "<volume percentage>",
     guildOnly: true,
+    needsVoice: true,
     execute(message, args, client){
         const embedMsg = new MessageEmbed()
             .setColor(blue)

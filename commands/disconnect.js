@@ -8,6 +8,7 @@ module.exports = {
     aliases: ['dis'],
     args: false,
     guildOnly: true,
+    needsVoice: true,
     async execute(message, args, client){
         const embedMsg = new MessageEmbed()
             .setColor(blue)
