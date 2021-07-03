@@ -9,6 +9,7 @@ module.exports = {
     agrs: true,
     usage: "<search query>",
     guildOnly: true,
+    needsVoice: true,
     async execute(message, args, client){
         const embedMsg = new MessageEmbed()
                 .setColor(blue)

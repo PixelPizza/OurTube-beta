@@ -6,6 +6,7 @@ module.exports = {
     description: "play current song from the beginning",
     args: false,
     guildOnly: true,
+    needsVoice: true,
     execute(message, args, client){
         const embedMsg = new MessageEmbed()
             .setColor(blue)
