@@ -19,7 +19,6 @@
   "homepage": "https://github.com/jaronetje/OurTube#readme",
   "dependencies": {
     "@discordjs/opus": "^0.3.2",
-    "common-tags": "^1.8.0",
     "discord.js": "^12.2.0",
     "discord.js-arbitrary-ffmpeg": "^1.1.0",
     "dotenv": "^10.0.0",
