@@ -21,7 +21,9 @@ module.exports = {
             "MANAGE_GUILD"
           ]
         })})
-        Admin: [Click here](${await client.generateInvite("ADMINISTRATOR")})
+        Admin: [Click here](${await client.generateInvite({
+          permissions: ["ADMINISTRATOR"]
+        })})
       `,
       footer: "Thanks for choosing me"
     }));
