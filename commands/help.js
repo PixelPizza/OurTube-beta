@@ -9,4 +9,4 @@ module.exports = {
 	cooldown: 5,
 	execute(message, args) {
 		// ...
-	},
+	}
