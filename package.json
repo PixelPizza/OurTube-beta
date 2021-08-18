@@ -33,6 +33,6 @@
     "ytdl-getinfo": "^1.1.0"
   },
   "engines": {
-    "node": "14.14.x"
+    "node": "16.6.1"
   }
 }
