@@ -12,7 +12,7 @@ module.exports = {
             .setColor(blue)
             .setTitle("🔂 Loop");
         
-        if (!client.connection){
+        if (!client.settings.connection){
             embedMsg
                 .setColor(red)
                 .setTitle("Not connected")
@@ -21,11 +21,11 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        if (!client.loop){
-            client.loop = true;
+        if (!client.settings.loop){
+            client.settings.loop = true;
             embedMsg.setDescription(`Now looping current song`);
         } else {
-            client.loop = false;
+            client.settings.loop = false;
             embedMsg.setDescription(`Stopped looping current song`);
         }
 

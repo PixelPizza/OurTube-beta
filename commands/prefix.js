@@ -12,14 +12,14 @@ module.exports = {
             .setTitle("Prefix");
 
         if (!args.length){
-            embedMsg.setDescription(`The current prefix is \`${client.prefix}\``);
+            embedMsg.setDescription(`The current prefix is \`${client.settings.prefix}\``);
             return message.channel.send(embedMsg);
         }
 
         if (args.length > 1){
             embedMsg
                 .setColor(red)
-                .setDescription(`${client.prefix}${this.name} takes one argument! The proper usage is ${client.prefix}${this.name} ${this.usage}`);
+                .setDescription(`${client.settings.prefix}${this.name} takes one argument! The proper usage is ${client.settings.prefix}${this.name} ${this.usage}`);
             
             return message.channel.send(embedMsg);
         }
@@ -32,8 +32,8 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        client.prefix = args[0];
-        embedMsg.setDescription(`The prefix has been set to \`${client.prefix}\``);
+        client.settings.prefix = args[0];
+        embedMsg.setDescription(`The prefix has been set to \`${client.settings.prefix}\``);
         message.channel.send(embedMsg);
     }
 }

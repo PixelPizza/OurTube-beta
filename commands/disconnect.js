@@ -15,13 +15,16 @@ module.exports = {
             .setTitle(`${muscialEmojis[Math.floor(Math.random() * muscialEmojis.length)]} Disconnect ${muscialEmojis[Math.floor(Math.random() * muscialEmojis.length)]}`)
             .setDescription(`disconnected from \`${message.member.voice.channel.name}\``);
 
-        if (client.connection){
+        if (client.settings.connection){
             message.member.voice.channel.leave();
-            client.connection = null;
-            client.dispatcher = null;
-            client.loop = false;
-            client.queue = [];
-            client.volume = 50;
+            client.settings = Object.assign(client.settings, {
+                queue: [],
+                connection: null,
+                dispatcher: null,
+                loop: false,
+                replay: false,
+                volume: 50
+            });
         } else {
             embedMsg
                 .setColor(red)

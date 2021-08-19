@@ -14,7 +14,7 @@ module.exports = {
             .setTitle("Clear")
             .setDescription(`The queue has been cleared!`);
 
-        if (!client.connection){
+        if (!client.settings.connection){
             embedMsg
                 .setColor(red)
                 .setDescription(`I'm not connected to a voice channel!`);
@@ -22,7 +22,7 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        if (!client.dispatcher){
+        if (!client.settings.dispatcher){
             embedMsg
                 .setColor(red)
                 .setDescription(`I'm not playing anything!`);
@@ -30,8 +30,8 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        client.queue = [];
-        client.dispatcher.end();
+        client.settings.queue = [];
+        client.settings.dispatcher.end();
         message.channel.send(embedMsg);
     }
 }

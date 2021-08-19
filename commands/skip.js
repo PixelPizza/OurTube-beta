@@ -14,7 +14,7 @@ module.exports = {
             .setTitle("Skip")
             .setDescription(`Skipped Song`);
 
-        if (!client.connection){
+        if (!client.settings.connection){
             embedMsg
                 .setColor(red)
                 .setTitle("Not connected")
@@ -23,7 +23,7 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        if (!client.queue.length){
+        if (!client.settings.queue.length){
             embedMsg
                 .setColor(red)
                 .setTitle("Not Playing")
@@ -32,11 +32,11 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        if (client.queue.length == 1){
-            client.queue = [];
+        if (client.settings.queue.length == 1){
+            client.settings.queue = [];
         }
-        client.dispatcher.end();
-        client.dispatcher = null;
+        client.settings.dispatcher.end();
+        client.settings.dispatcher = null;
         message.channel.send(embedMsg);
     }
 }

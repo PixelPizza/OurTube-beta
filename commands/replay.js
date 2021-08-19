@@ -13,7 +13,7 @@ module.exports = {
             .setTitle("Replay")
             .setDescription(`Replaying current song`);
 
-        if (!client.connection){
+        if (!client.settings.connection){
             embedMsg
                 .setColor(red)
                 .setDescription(`I'm not connected to a voice channel!`);
@@ -21,7 +21,7 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        if (!client.dispatcher){
+        if (!client.settings.dispatcher){
             embedMsg
                 .setColor(red)
                 .setDescription(`I'm not playing anything!`);
@@ -29,8 +29,8 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        client.replay = true;
-        client.dispatcher.end();
+        client.settings.replay = true;
+        client.settings.dispatcher.end();
         message.channel.send(embedMsg);
     }
 }

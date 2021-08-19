@@ -63,24 +63,24 @@ module.exports = {
         });
 
         async function playSong(){
-            if (client.connection){
-                if (!client.queue.length){
+            if (client.settings.connection){
+                if (!client.settings.queue.length){
                     setTimeout(function() {
                         playSong();
                     }, 1000);
                     return;
                 }
-                client.dispatcher = client.connection.play(await ytdl(client.queue[0]), {type: "opus", highWaterMark: 50});
-                client.dispatcher.on('finish', () => {
-                    if (!client.loop){
-                        client.queue.shift();
+                client.settings.dispatcher = client.settings.connection.play(await ytdl(client.settings.queue[0]), {type: "opus", highWaterMark: 50});
+                client.settings.dispatcher.on('finish', () => {
+                    if (!client.settings.loop){
+                        client.settings.queue.shift();
                     }
                     setTimeout(function() {
                         playSong();
                     }, 1000);
                 });
             } else {
-                client.dispatcher = null;
+                client.settings.dispatcher = null;
             }
         }
 
@@ -97,16 +97,16 @@ module.exports = {
                 if (isNaN(msg.content) || parseInt(msg.content) > results.length || parseInt(msg.content) < 1){
                     return collectPlay(mess);
                 }
-                if (!client.connection){
-                    client.connection = await message.member.voice.channel.join();
+                if (!client.settings.connection){
+                    client.settings.connection = await message.member.voice.channel.join();
                 }
                 const index = parseInt(msg.content) - 1;
                 const videoId = results[index].id;
                 let resultTitle = results[index].title.replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, "&");
-                client.queue.push(videoId);
+                client.settings.queue.push(videoId);
                 const link = `[${resultTitle}](${results[index].link})`;
-                if (client.queue.length === 1){
-                    client.nowPlaying = videoId;
+                if (client.settings.queue.length === 1){
+                    client.settings.nowPlaying = videoId;
                     cancelEmbed.setDescription(`Now Playing ${link}`);
                     mess.edit(cancelEmbed);
                     return playSong();

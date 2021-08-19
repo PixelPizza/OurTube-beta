@@ -15,7 +15,7 @@ module.exports = {
             .setColor(blue)
             .setTitle("Now Playing");
 
-        if (!client.connection){
+        if (!client.settings.connection){
             embedMsg
                 .setColor(red)
                 .setDescription(`I'm not connected to a voice channel!`);
@@ -23,7 +23,7 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        if (!client.dispatcher || !client.queue.length){
+        if (!client.settings.dispatcher || !client.settings.queue.length){
             embedMsg
                 .setColor(red)
                 .setDescription(`I'm not playing anything!`);
@@ -31,7 +31,7 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        if (client.queue.length == 1){
+        if (client.settings.queue.length == 1){
             embedMsg
                 .setColor(red)
                 .setDescription(`I can't remove the currently playing number with ${prefix}remove please use ${prefix}skip!`);
@@ -55,7 +55,7 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        const length = client.queue.length - 1;
+        const length = client.settings.queue.length - 1;
         const index = parseInt(args[0]);
         if (index > length){
             embedMsg
@@ -65,7 +65,7 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
         
-        client.queue.splice(index, 1);
+        client.settings.queue.splice(index, 1);
         embedMsg.setDescription(`Removed index ${index} from the queue`);
         message.channel.send(embedMsg);
     }

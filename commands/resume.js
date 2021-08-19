@@ -15,7 +15,7 @@ module.exports = {
             .setTitle(`▶️ Resume`)
             .setDescription("Resuming song");
 
-        if (!client.connection){
+        if (!client.settings.connection){
             embedMsg
                 .setColor(red)
                 .setTitle("Not connected")
@@ -24,7 +24,7 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        if (!client.dispatcher || !client.queue.length){
+        if (!client.settings.dispatcher || !client.settings.queue.length){
             embedMsg
                 .setColor(red)
                 .setTitle("Not Playing")
@@ -33,7 +33,7 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        client.dispatcher.resume();
+        client.settings.dispatcher.resume();
         message.channel.send(embedMsg);
     }
 }

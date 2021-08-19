@@ -14,7 +14,7 @@ module.exports = {
             .setColor(blue)
             .setTitle("Queue");
 
-        if (!client.connection){
+        if (!client.settings.connection){
             embedMsg
                 .setColor(red)
                 .setDescription(`I'm not connected to a voice channel!`);
@@ -22,7 +22,7 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        if (!client.dispatcher || !client.queue.length){
+        if (!client.settings.dispatcher || !client.settings.queue.length){
             embedMsg
                 .setColor(red)
                 .setDescription(`I'm not playing anything!`);
@@ -31,7 +31,7 @@ module.exports = {
         }
 
         let count = 0;
-        for(let videoId of client.queue){
+        for(let videoId of client.settings.queue){
             let result = await getInfo(videoId);
             result = result.items[0];
             let hours = Math.floor(result.duration / 3600);
@@ -60,7 +60,7 @@ module.exports = {
                 embedMsg.fields[1].value = `${embedMsg.fields[1].value}\n\n${count}. ${video}`;
             }
             count++;
-            if (count == client.queue.length){
+            if (count == client.settings.queue.length){
                 message.channel.send(embedMsg);
             }
         }
