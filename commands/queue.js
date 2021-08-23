@@ -10,11 +10,13 @@ module.exports = {
     guildOnly: true,
     needsVoice: true,
     async execute(message, args, client){
-        const embedMsg = new MessageEmbed()
+        const guildId = message.guild.id,
+            settings = client.settings.get(guildId),
+            embedMsg = new MessageEmbed()
             .setColor(blue)
             .setTitle("Queue");
 
-        if (!client.settings.connection){
+        if (!settings.connection){
             embedMsg
                 .setColor(red)
                 .setDescription(`I'm not connected to a voice channel!`);
@@ -22,7 +24,7 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        if (!client.settings.dispatcher || !client.settings.queue.length){
+        if (!settings.dispatcher || !settings.queue.length){
             embedMsg
                 .setColor(red)
                 .setDescription(`I'm not playing anything!`);
@@ -31,7 +33,7 @@ module.exports = {
         }
 
         let count = 0;
-        for(let videoId of client.settings.queue){
+        for(let videoId of settings.queue){
             let result = await getInfo(videoId);
             result = result.items[0];
             let hours = Math.floor(result.duration / 3600);
@@ -60,7 +62,7 @@ module.exports = {
                 embedMsg.fields[1].value = `${embedMsg.fields[1].value}\n\n${count}. ${video}`;
             }
             count++;
-            if (count == client.settings.queue.length){
+            if (count == settings.queue.length){
                 message.channel.send(embedMsg);
             }
         }

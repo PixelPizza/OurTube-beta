@@ -9,12 +9,14 @@ module.exports = {
     guildOnly: true,
     needsVoice: true,
     execute(message, args, client){
-        const embedMsg = new MessageEmbed()
+        const guildId = message.guild.id,
+            settings = client.settings.get(guildId),
+            embedMsg = new MessageEmbed()
             .setColor(blue)
             .setTitle("Clear")
             .setDescription(`The queue has been cleared!`);
 
-        if (!client.settings.connection){
+        if (!settings.connection){
             embedMsg
                 .setColor(red)
                 .setDescription(`I'm not connected to a voice channel!`);
@@ -22,7 +24,7 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        if (!client.settings.dispatcher){
+        if (!settings.dispatcher){
             embedMsg
                 .setColor(red)
                 .setDescription(`I'm not playing anything!`);
@@ -30,8 +32,9 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        client.settings.queue = [];
-        client.settings.dispatcher.end();
+        settings.queue = [];
+        settings.dispatcher.end();
+        client.settings.set(guildId, settings);
         message.channel.send(embedMsg);
     }
 }

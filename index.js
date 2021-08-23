@@ -11,18 +11,7 @@ const {blue, red} = require('./colors.json');
 const {Client, Collection, MessageEmbed} = require('discord.js');
 const client = new Client();
 client.commands = new Collection();
-client.settings = {
-    queue: [],
-    connection: null,
-    dispatcher: null,
-    loop: false,
-    volume: 50,
-    prefix,
-    replay: false,
-    seek: 0,
-    shuffle: false,
-    nowPlaying: undefined
-};
+client.settings = new Collection();
 const cmdFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of cmdFiles) {
@@ -45,18 +34,38 @@ client.on('error', error => {
 });
 
 client.on('message', async message => {
-    const embedMsg = new MessageEmbed()
+    if(message.channel.type == "dm") return;
+
+    const {guild} = message,
+        guildId = guild.id;
+    
+    // set default guild settings
+    if(!client.settings.has(guildId)) client.settings.set(guildId, {
+        queue: [],
+        connection: null,
+        dispatcher: null,
+        loop: false,
+        volume: 50,
+        prefix,
+        replay: false,
+        seek: 0,
+        shuffle: false,
+        nowPlaying: undefined
+    });
+
+    const settings = client.settings.get(guildId),
+        embedMsg = new MessageEmbed()
         .setColor(blue)
         .setTimestamp();
 
     if (message.content === "<@714609617862393917>" || message.content === "<@!714609617862393917>"){
-        embedMsg.setTitle("Prefix").setDescription(`My current prefix is \`${client.settings.prefix}\``);
+        embedMsg.setTitle("Prefix").setDescription(`My current prefix is \`${settings.prefix}\``);
         message.channel.send(embedMsg);
     }
 
-    if (!message.content.startsWith(client.settings.prefix) || message.author.bot || message.webhookID) return;
+    if (!message.content.startsWith(settings.prefix) || message.author.bot || message.webhookID) return;
 
-    const args = message.content.slice(client.settings.prefix.length).split(/ +/);
+    const args = message.content.slice(settings.prefix.length).split(/ +/);
     const commandName = args.shift().toLowerCase();
 
     console.log(commandName);
@@ -65,15 +74,19 @@ client.on('message', async message => {
 
     if (!command) return;
 
-    const clientMember = message.guild.members.cache.get(client.user.id);
+    const clientMember = guild.members.cache.get(client.user.id);
     if (!clientMember.voice.channel){
-        client.settings = Object.assign(client.settings, {
+        client.settings.set(guildId, {
             queue: [],
             connection: null,
             dispatcher: null,
             loop: false,
+            volume: 50,
+            prefix: settings.prefix,
             replay: false,
-            volume: 50
+            seek: 0,
+            shuffle: false,
+            nowPlaying: undefined
         });
     }
 
@@ -106,38 +119,40 @@ client.on('message', async message => {
         return message.channel.send(embedMsg);
     }
 
-    async function playSong(){
-        if (client.settings.connection){
-            if (!client.settings.queue.length){
+    async function playSong(guildId){
+        const settings = client.settings.get(guildId);
+        if (settings.connection){
+            if (!settings.queue.length){
                 setTimeout(function() {
-                    playSong();
+                    playSong(guildId);
                 }, 1000);
                 return;
             }
-            client.settings.dispatcher = client.settings.connection.play(await ytdl(client.settings.queue[0], {quality: 'highestaudio'}), {type: "opus", highWaterMark: 2000, seek: client.settings.seek});
-            client.settings.dispatcher.setVolume(client.settings.volume / 100);
-            client.settings.seek = 0;
-            client.settings.dispatcher.on('finish', () => {
-                if (!client.settings.loop && !client.settings.replay || command.name === "skip"){
-                    client.settings.queue.shift();
-                } else if (client.settings.replay){
-                    client.settings.replay = false;
+            settings.dispatcher = settings.connection.play(await ytdl(settings.queue[0], {quality: 'highestaudio'}), {type: "opus", highWaterMark: 2000, seek: settings.seek});
+            settings.dispatcher.setVolume(settings.volume / 100);
+            settings.seek = 0;
+            settings.dispatcher.on('finish', () => {
+                if (!settings.loop && !settings.replay || command.name === "skip"){
+                    settings.queue.shift();
+                } else if (settings.replay){
+                    settings.replay = false;
                 }
-                client.settings.nowPlaying = client.settings.queue[0];
+                settings.nowPlaying = settings.queue[0];
                 setTimeout(function() {
-                    playSong();
+                    playSong(guildId);
                 }, 1000);
             });
-            client.settings.dispatcher.on('error', console.error);
+            settings.dispatcher.on('error', console.error);
         } else {
-            client.settings.dispatcher = null;
+            settings.dispatcher = null;
         }
+        client.settings.set(guildId, settings);
     }
 
     try {
         await command.execute(message, args, client);
-        if (!client.settings.dispatcher && clientMember.voice.channel){
-            playSong();
+        if (!settings.dispatcher && clientMember.voice.channel){
+            playSong(guildId);
         }
     } catch (error) {
         console.error(error);

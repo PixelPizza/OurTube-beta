@@ -11,7 +11,8 @@ module.exports = {
     guildOnly: true,
     needsVoice: true,
     async execute(message, args, client) {
-        const embedMsg = new MessageEmbed()
+        const guildId = message.guild.id,
+            embedMsg = new MessageEmbed()
             .setColor(blue)
             .setTitle("Search Results")
             .setDescription("type a number of this list to play that song")
@@ -63,28 +64,31 @@ module.exports = {
         });
 
         async function playSong(){
-            if (client.settings.connection){
-                if (!client.settings.queue.length){
+            const settings = client.settings.get(guildId);
+            if (settings.connection){
+                if (!settings.queue.length){
                     setTimeout(function() {
                         playSong();
                     }, 1000);
                     return;
                 }
-                client.settings.dispatcher = client.settings.connection.play(await ytdl(client.settings.queue[0]), {type: "opus", highWaterMark: 50});
-                client.settings.dispatcher.on('finish', () => {
-                    if (!client.settings.loop){
-                        client.settings.queue.shift();
+                settings.dispatcher = settings.connection.play(await ytdl(settings.queue[0]), {type: "opus", highWaterMark: 50});
+                settings.dispatcher.on('finish', () => {
+                    if (!settings.loop){
+                        settings.queue.shift();
                     }
                     setTimeout(function() {
                         playSong();
                     }, 1000);
                 });
             } else {
-                client.settings.dispatcher = null;
+                settings.dispatcher = null;
             }
+            client.settings.set(guildId, settings);
         }
 
         async function collectPlay(mess){
+            const settings = client.settings.get(guildId);
             const filter = m => m.author === message.author;
             const collector = message.channel.createMessageCollector(filter, {max: 1});
             collector.on('collect', async msg => {
@@ -97,20 +101,21 @@ module.exports = {
                 if (isNaN(msg.content) || parseInt(msg.content) > results.length || parseInt(msg.content) < 1){
                     return collectPlay(mess);
                 }
-                if (!client.settings.connection){
-                    client.settings.connection = await message.member.voice.channel.join();
+                if (!settings.connection){
+                    settings.connection = await message.member.voice.channel.join();
                 }
                 const index = parseInt(msg.content) - 1;
                 const videoId = results[index].id;
                 let resultTitle = results[index].title.replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, "&");
-                client.settings.queue.push(videoId);
+                settings.queue.push(videoId);
                 const link = `[${resultTitle}](${results[index].link})`;
-                if (client.settings.queue.length === 1){
-                    client.settings.nowPlaying = videoId;
+                if (settings.queue.length === 1){
+                    settings.nowPlaying = videoId;
                     cancelEmbed.setDescription(`Now Playing ${link}`);
                     mess.edit(cancelEmbed);
                     return playSong();
                 }
+                client.settings.set(guildId, settings);
                 cancelEmbed.setDescription(`${link} has been added to the queue`);
                 mess.edit(cancelEmbed);
             });
