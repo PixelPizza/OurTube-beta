@@ -7,30 +7,18 @@ module.exports = {
     args: false,
     guildOnly: true,
     needsVoice: true,
+    needsConnection: true,
+    needsDispatcher: true,
     execute(message, args, client){
-        const embedMsg = new MessageEmbed()
+        const guildId = message.guild.id,
+            settings = client.settings.get(guildId);
+
+        settings.replay = true;
+        settings.dispatcher.end();
+        client.settings.set(guildId, settings);
+        message.channel.send(new MessageEmbed()
             .setColor(blue)
             .setTitle("Replay")
-            .setDescription(`Replaying current song`);
-
-        if (!client.connection){
-            embedMsg
-                .setColor(red)
-                .setDescription(`I'm not connected to a voice channel!`);
-
-            return message.channel.send(embedMsg);
-        }
-
-        if (!client.dispatcher){
-            embedMsg
-                .setColor(red)
-                .setDescription(`I'm not playing anything!`);
-
-            return message.channel.send(embedMsg);
-        }
-
-        client.replay = true;
-        client.dispatcher.end();
-        message.channel.send(embedMsg);
+            .setDescription(`Replaying current song`));
     }
 }

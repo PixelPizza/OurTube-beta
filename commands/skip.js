@@ -1,5 +1,5 @@
 const {MessageEmbed} = require('discord.js');
-const {blue, red} = require('../colors.json');
+const {blue} = require('../colors.json');
 
 module.exports = {
     name: "skip",
@@ -8,35 +8,20 @@ module.exports = {
     args: false,
     guildOnly: true,
     needsVoice: true,
+    needsConnection: true,
+    needsDispatcher: true,
+    needsQueue: true,
     execute(message, args, client){
-        const embedMsg = new MessageEmbed()
+        const guildId = message.guild.id,
+            settings = client.settings.get(guildId);
+
+        if (settings.queue.length == 1) settings.queue = [];
+        settings.dispatcher.end();
+        settings.dispatcher = null;
+        client.settings.set(guildId, settings);
+        message.channel.send(new MessageEmbed()
             .setColor(blue)
             .setTitle("Skip")
-            .setDescription(`Skipped Song`);
-
-        if (!client.connection){
-            embedMsg
-                .setColor(red)
-                .setTitle("Not connected")
-                .setDescription(`I'm not connected to a voice channel!`);
-            
-            return message.channel.send(embedMsg);
-        }
-
-        if (!client.queue.length){
-            embedMsg
-                .setColor(red)
-                .setTitle("Not Playing")
-                .setDescription(`I'm currently not playing anything!`);
-
-            return message.channel.send(embedMsg);
-        }
-
-        if (client.queue.length == 1){
-            client.queue = [];
-        }
-        client.dispatcher.end();
-        client.dispatcher = null;
-        message.channel.send(embedMsg);
+            .setDescription(`Skipped Song`));
     }
 }

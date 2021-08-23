@@ -7,33 +7,27 @@ module.exports = {
     usage: "<prefix>",
     guildOnly: true,
     execute(message, args, client){
-        const embedMsg = new MessageEmbed()
+        const guildId = message.guild.id,
+            settings = client.settings.get(guildId),
+            embedMsg = new MessageEmbed()
             .setColor(blue)
             .setTitle("Prefix");
 
-        if (!args.length){
-            embedMsg.setDescription(`The current prefix is \`${client.prefix}\``);
-            return message.channel.send(embedMsg);
-        }
-
-        if (args.length > 1){
-            embedMsg
+        if (!args.length) return message.channel.send(embedMsg.setDescription(`The current prefix is \`${settings.prefix}\``));
+        if (args.length > 1) {
+            return message.channel.send(embedMsg
                 .setColor(red)
-                .setDescription(`${client.prefix}${this.name} takes one argument! The proper usage is ${client.prefix}${this.name} ${this.usage}`);
-            
-            return message.channel.send(embedMsg);
+                .setDescription(`${settings.prefix}${this.name} takes one argument! The proper usage is ${settings.prefix}${this.name} ${this.usage}`));
         }
-
-        if (args[0].length > 30){
-            embedMsg
+        if (args[0].length > 30) {
+            return message.channel.send(embedMsg
                 .setColor(red)
-                .setDescription(`The maximum length of the prefix is 30 characters!`);
-
-            return message.channel.send(embedMsg);
+                .setDescription(`The maximum length of the prefix is 30 characters!`));
         }
 
-        client.prefix = args[0];
-        embedMsg.setDescription(`The prefix has been set to \`${client.prefix}\``);
+        settings.prefix = args[0];
+        embedMsg.setDescription(`The prefix has been set to \`${settings.prefix}\``);
+        client.settings.set(guildId, settings);
         message.channel.send(embedMsg);
     }
 }

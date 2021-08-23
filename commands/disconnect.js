@@ -1,5 +1,5 @@
 const {MessageEmbed} = require('discord.js');
-const {blue, red} = require('../colors.json');
+const {blue} = require('../colors.json');
 const {muscialEmojis} = require('../config.json');
 
 module.exports = {
@@ -9,25 +9,27 @@ module.exports = {
     args: false,
     guildOnly: true,
     needsVoice: true,
+    needsConnection: true,
     async execute(message, args, client){
-        const embedMsg = new MessageEmbed()
+        const guildId = message.guild.id,
+            settings = client.settings.get(guildId);
+
+        message.member.voice.channel.leave();
+        client.settings.set(guildId, {
+            queue: [],
+            connection: null,
+            dispatcher: null,
+            loop: false,
+            volume: 50,
+            prefix: settings.prefix,
+            replay: false,
+            seek: 0,
+            shuffle: false,
+            nowPlaying: undefined
+        });
+        message.channel.send(new MessageEmbed()
             .setColor(blue)
             .setTitle(`${muscialEmojis[Math.floor(Math.random() * muscialEmojis.length)]} Disconnect ${muscialEmojis[Math.floor(Math.random() * muscialEmojis.length)]}`)
-            .setDescription(`disconnected from \`${message.member.voice.channel.name}\``);
-
-        if (client.connection){
-            message.member.voice.channel.leave();
-            client.connection = null;
-            client.dispatcher = null;
-            client.loop = false;
-            client.queue = [];
-            client.volume = 50;
-        } else {
-            embedMsg
-                .setColor(red)
-                .setTitle("Not connected")
-                .setDescription("I'm not connected to a voice channel!");
-        }
-        message.channel.send(embedMsg);
+            .setDescription(`disconnected from \`${message.member.voice.channel.name}\``));
     }
 }
