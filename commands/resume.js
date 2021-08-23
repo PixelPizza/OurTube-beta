@@ -9,13 +9,14 @@ module.exports = {
     guildOnly: true,
     needsVoice: true,
     execute(message, args, client){
-
-        const embedMsg = new MessageEmbed()
+        const guildId = message.guild.id,
+            settings = client.settings.get(guildId),
+            embedMsg = new MessageEmbed()
             .setColor(blue)
             .setTitle(`▶️ Resume`)
             .setDescription("Resuming song");
 
-        if (!client.connection){
+        if (!settings.connection){
             embedMsg
                 .setColor(red)
                 .setTitle("Not connected")
@@ -24,7 +25,7 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        if (!client.dispatcher || !client.queue.length){
+        if (!settings.dispatcher || !settings.queue.length){
             embedMsg
                 .setColor(red)
                 .setTitle("Not Playing")
@@ -33,7 +34,7 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        client.dispatcher.resume();
+        settings.dispatcher.resume();
         message.channel.send(embedMsg);
     }
 }

@@ -8,12 +8,14 @@ module.exports = {
     guildOnly: true,
     needsVoice: true,
     execute(message, args, client){
-        const embedMsg = new MessageEmbed()
+        const guildId = message.guild.id,
+            settings = client.settings.get(guildId),
+            embedMsg = new MessageEmbed()
             .setColor(blue)
             .setTitle("⏸︎ Pause")
             .setDescription("Paused current song");
 
-        if (!client.connection){
+        if (!settings.connection){
             embedMsg
                 .setColor(red)
                 .setTitle("Not connected")
@@ -22,7 +24,7 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        if (!client.dispatcher || !client.queue.length){
+        if (!settings.dispatcher || !settings.queue.length){
             embedMsg
                 .setColor(red)
                 .setTitle("Not Playing")
@@ -31,7 +33,7 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        client.dispatcher.pause();
+        settings.dispatcher.pause();
         message.channel.send(embedMsg);
     }
 }

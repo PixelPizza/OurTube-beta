@@ -10,18 +10,27 @@ module.exports = {
     guildOnly: true,
     needsVoice: true,
     async execute(message, args, client){
-        const embedMsg = new MessageEmbed()
+        const guildId = message.guild.id,
+            settings = client.settings.get(guildId),
+            embedMsg = new MessageEmbed()
             .setColor(blue)
             .setTitle(`${muscialEmojis[Math.floor(Math.random() * muscialEmojis.length)]} Disconnect ${muscialEmojis[Math.floor(Math.random() * muscialEmojis.length)]}`)
             .setDescription(`disconnected from \`${message.member.voice.channel.name}\``);
 
-        if (client.connection){
+        if (settings.connection){
             message.member.voice.channel.leave();
-            client.connection = null;
-            client.dispatcher = null;
-            client.loop = false;
-            client.queue = [];
-            client.volume = 50;
+            client.settings.set(guildId, {
+                queue: [],
+                connection: null,
+                dispatcher: null,
+                loop: false,
+                volume: 50,
+                prefix: settings.prefix,
+                replay: false,
+                seek: 0,
+                shuffle: false,
+                nowPlaying: undefined
+            });
         } else {
             embedMsg
                 .setColor(red)

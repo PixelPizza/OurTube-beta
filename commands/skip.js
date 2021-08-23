@@ -9,12 +9,14 @@ module.exports = {
     guildOnly: true,
     needsVoice: true,
     execute(message, args, client){
-        const embedMsg = new MessageEmbed()
+        const guildId = message.guild.id,
+            settings = client.settings.get(guildId),
+            embedMsg = new MessageEmbed()
             .setColor(blue)
             .setTitle("Skip")
             .setDescription(`Skipped Song`);
 
-        if (!client.connection){
+        if (!settings.connection){
             embedMsg
                 .setColor(red)
                 .setTitle("Not connected")
@@ -23,7 +25,7 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        if (!client.queue.length){
+        if (!settings.queue.length){
             embedMsg
                 .setColor(red)
                 .setTitle("Not Playing")
@@ -32,11 +34,12 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        if (client.queue.length == 1){
-            client.queue = [];
+        if (settings.queue.length == 1){
+            settings.queue = [];
         }
-        client.dispatcher.end();
-        client.dispatcher = null;
+        settings.dispatcher.end();
+        settings.dispatcher = null;
+        client.settings.set(guildId, settings);
         message.channel.send(embedMsg);
     }
 }

@@ -9,11 +9,13 @@ module.exports = {
     guildOnly: true,
     needsVoice: true,
     execute(message, args, client){
-        const embedMsg = new MessageEmbed()
+        const guildId = message.guild.id,
+            settings = client.settings.get(guildId),
+            embedMsg = new MessageEmbed()
             .setColor(blue)
             .setTitle("Now Playing");
 
-        if (!client.connection){
+        if (!settings.connection){
             embedMsg
                 .setColor(red)
                 .setDescription(`I'm not connected to a voice channel!`);
@@ -21,7 +23,7 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        if (!client.dispatcher || !client.queue.length){
+        if (!settings.dispatcher || !settings.queue.length){
             embedMsg
                 .setColor(red)
                 .setDescription(`I'm not playing anything!`);
@@ -29,7 +31,7 @@ module.exports = {
             return message.channel.send(embedMsg);
         }
 
-        getInfo(client.queue[0]).then(info => {
+        getInfo(settings.queue[0]).then(info => {
             let result = info.items[0];
             let hours = Math.floor(result.duration / 3600);
             let seconds = result.duration % 3600;
@@ -48,7 +50,7 @@ module.exports = {
                 }
                 duration = `${hours}:${duration}`;
             }
-            let video = `${result.creator} | [${result.fulltitle}](https://www.youtube.com/watch?v=${client.queue[0]}) | \`${duration}\``;
+            let video = `${result.creator} | [${result.fulltitle}](https://www.youtube.com/watch?v=${settings.queue[0]}) | \`${duration}\``;
             embedMsg.setDescription(video);
             message.channel.send(embedMsg);
         });

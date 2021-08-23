@@ -10,13 +10,16 @@ module.exports = {
     guildOnly: true,
     needsVoice: true,
     async execute(message, args, client){
-        const embedMsg = new MessageEmbed()
+        const guildId = message.guild.id,
+            settings = client.settings.get(guildId),
+            embedMsg = new MessageEmbed()
             .setColor(blue)
             .setTitle(`${muscialEmojis[Math.floor(Math.random() * muscialEmojis.length)]} Join ${muscialEmojis[Math.floor(Math.random() * muscialEmojis.length)]}`)
             .setDescription(`Joined \`${message.member.voice.channel.name}\``);
 
-        if (!client.connection){
-            client.connection = await message.member.voice.channel.join();
+        if (!settings.connection){
+            settings.connection = await message.member.voice.channel.join();
+            client.settings.set(guildId, settings);
         }
         message.channel.send(embedMsg);
     }
