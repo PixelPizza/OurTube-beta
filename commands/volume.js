@@ -8,6 +8,8 @@ module.exports = {
     usage: "<volume percentage>",
     guildOnly: true,
     needsVoice: true,
+    needsConnection: true,
+    needsDispatcher: true,
     execute(message, args, client){
         const guildId = message.guild.id,
             settings = client.settings.get(guildId),
@@ -15,49 +17,29 @@ module.exports = {
             .setColor(blue)
             .setTitle("Volume");
 
-        if (!settings.dispatcher){
-            embedMsg
-                .setColor(red)
-                .setDescription(`I'm not playing anything!`);
-
-            return message.channel.send(embedMsg);
-        }
-
-        if (!args.length){
-            embedMsg.setDescription(`The current volume is ${settings.volume}%`);
-            return message.channel.send(embedMsg);
-        }
-
+        if (!args.length) return message.channel.send(embedMsg.setDescription(`The current volume is ${settings.volume}%`));
         if (args.length > 1){
-            embedMsg
+            return message.channel.send(embedMsg
                 .setColor(red)
-                .setDescription(`${settings.prefix}${this.name} takes one argument! The proper usage is ${settings.prefix}${this.name} ${this.usage}`);
-        
-            return message.channel.send(embedMsg);
+                .setDescription(`${settings.prefix}${this.name} takes one argument! The proper usage is ${settings.prefix}${this.name} ${this.usage}`));
         }
-
         if (isNaN(args[0])){
-            embedMsg
+            return message.channel.send(embedMsg
                 .setColor(red)
-                .setDescription(`The volume percentage should be a round number!`);
-
-            return message.channel.send(embedMsg);
+                .setDescription(`The volume percentage should be a round number!`));
         }
 
         const volume = parseInt(args);
 
         if (volume < 1 || volume > 200){
-            embedMsg
+            return message.channel.send(embedMsg
                 .setColor(red)
-                .setDescription(`The volume percentage should be a number between 1% and 200%`);
-
-            return message.channel.send(embedMsg);
+                .setDescription(`The volume percentage should be a number between 1% and 200%`));
         }
 
         settings.dispatcher.setVolume(volume / 100);
         settings.volume = volume;
         client.settings.set(guildId, settings);
-        embedMsg.setDescription(`The volume has been changed to ${volume}%`);
-        message.channel.send(embedMsg);
+        message.channel.send(embedMsg.setDescription(`The volume has been changed to ${volume}%`));
     }
 }

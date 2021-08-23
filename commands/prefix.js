@@ -13,25 +13,16 @@ module.exports = {
             .setColor(blue)
             .setTitle("Prefix");
 
-        if (!args.length){
-            embedMsg.setDescription(`The current prefix is \`${settings.prefix}\``);
-            return message.channel.send(embedMsg);
-        }
-
-        if (args.length > 1){
-            embedMsg
+        if (!args.length) return message.channel.send(embedMsg.setDescription(`The current prefix is \`${settings.prefix}\``));
+        if (args.length > 1) {
+            return message.channel.send(embedMsg
                 .setColor(red)
-                .setDescription(`${settings.prefix}${this.name} takes one argument! The proper usage is ${settings.prefix}${this.name} ${this.usage}`);
-            
-            return message.channel.send(embedMsg);
+                .setDescription(`${settings.prefix}${this.name} takes one argument! The proper usage is ${settings.prefix}${this.name} ${this.usage}`));
         }
-
-        if (args[0].length > 30){
-            embedMsg
+        if (args[0].length > 30) {
+            return message.channel.send(embedMsg
                 .setColor(red)
-                .setDescription(`The maximum length of the prefix is 30 characters!`);
-
-            return message.channel.send(embedMsg);
+                .setDescription(`The maximum length of the prefix is 30 characters!`));
         }
 
         settings.prefix = args[0];
