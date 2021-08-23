@@ -7,31 +7,16 @@ module.exports = {
     args: false,
     guildOnly: true,
     needsVoice: true,
+    needsConnection: true,
     execute(message, args, client){
         const guildId = message.guild.id,
-            settings = client.settings.get(guildId),
-            embedMsg = new MessageEmbed()
-            .setColor(blue)
-            .setTitle("🔂 Loop");
+            settings = client.settings.get(guildId);
         
-        if (!settings.connection){
-            embedMsg
-                .setColor(red)
-                .setTitle("Not connected")
-                .setDescription("I'm not connected to a voice channel!");
-
-            return message.channel.send(embedMsg);
-        }
-
-        if (!settings.loop){
-            settings.loop = true;
-            embedMsg.setDescription(`Now looping current song`);
-        } else {
-            settings.loop = false;
-            embedMsg.setDescription(`Stopped looping current song`);
-        }
-
+        settings.loop = !settings.loop;
         client.settings.set(guildId, settings);
-        message.channel.send(embedMsg);
+        message.channel.send(new MessageEmbed()
+            .setColor(blue)
+            .setTitle("🔂 Loop")
+            .setDescription(settings.loop ? "Now looping current song" : "Stopped looping current song"));
     }
 }
